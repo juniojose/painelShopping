@@ -52,7 +52,7 @@ class User {
         $this->email = htmlspecialchars(strip_tags($this->email));
         
         // Hash da senha
-        $this->senha = password_hash($this->senha, PASSWORD_BCRYPT);
+        $this->senha = password_hash($this->senha, PASSWORD_DEFAULT);
 
         $stmt->bindParam(':nome', $this->nome);
         $stmt->bindParam(':email', $this->email);
@@ -80,7 +80,7 @@ class User {
         $stmt->bindParam(':email', $this->email);
 
         if (!empty($this->senha)) {
-            $hashed_password = password_hash($this->senha, PASSWORD_BCRYPT);
+            $hashed_password = password_hash($this->senha, PASSWORD_DEFAULT);
             $stmt->bindParam(':senha', $hashed_password);
         }
 
