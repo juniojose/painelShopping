@@ -1,48 +1,50 @@
 <?php
 $basePath = realpath(__DIR__ . '/../../');
 
-// Proteção e includes
+// Includes
 require_once $basePath . '/src/lib/auth.php';
 require_auth();
 require_once $basePath . '/config/database.php';
 require_once $basePath . '/src/models/User.php';
-require_once $basePath . '/src/lib/helpers.php'; // Inclui o novo helper
+require_once $basePath . '/src/lib/helpers.php';
 
 // Inicialização
 $db = Database::getInstance();
 $user = new User($db);
-$redirect_url = BASE_URL . '/src/views/admin/usuarios/index.php';
+$redirect_url = '?page=usuarios'; // URL de redirecionamento correta
 
 $action = $_GET['action'] ?? '';
 
 // Roteamento de ações
 switch ($action) {
     case 'create':
-        handlePostRequest(function() use ($user) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user->nome = $_POST['nome'];
             $user->email = $_POST['email'];
             $user->senha = $_POST['senha'];
 
-            $_SESSION['message'] = $user->create() 
-                ? 'Usuário criado com sucesso!' 
+            $_SESSION['message'] = $user->create()
+                ? 'Usuário criado com sucesso!'
                 : 'Erro ao criar o usuário.';
-        }, $redirect_url);
+            redirect($redirect_url);
+        }
         break;
 
     case 'update':
-        handlePostRequest(function() use ($user) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user->id = $_POST['id'];
             $user->nome = $_POST['nome'];
             $user->email = $_POST['email'];
-            
+
             if (!empty($_POST['senha'])) {
                 $user->senha = $_POST['senha'];
             }
 
-            $_SESSION['message'] = $user->update() 
-                ? 'Usuário atualizado com sucesso!' 
+            $_SESSION['message'] = $user->update()
+                ? 'Usuário atualizado com sucesso!'
                 : 'Erro ao atualizar o usuário.';
-        }, $redirect_url);
+            redirect($redirect_url);
+        }
         break;
 
     case 'delete':
@@ -51,8 +53,8 @@ switch ($action) {
                 $_SESSION['message'] = 'Erro: Você não pode excluir seu próprio usuário.';
             } else {
                 $user->id = $_GET['id'];
-                $_SESSION['message'] = $user->delete() 
-                    ? 'Usuário excluído com sucesso!' 
+                $_SESSION['message'] = $user->delete()
+                    ? 'Usuário excluído com sucesso!'
                     : 'Erro ao excluir o usuário.';
             }
         }
