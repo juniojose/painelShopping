@@ -1,5 +1,15 @@
 <?php
 
+// --- CONFIGURAÇÃO DA URL BASE ---
+// Detecta automaticamente a URL base da aplicação, funcione na raiz ou em subdiretório.
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+$host = $_SERVER['HTTP_HOST'];
+// Pega o caminho do diretório do projeto a partir da raiz do servidor web.
+$project_path = rtrim(str_replace(basename(dirname(__DIR__)), '', dirname($_SERVER['SCRIPT_NAME'])), '/');
+$base_url = $protocol . $host . $project_path;
+define('BASE_URL', $base_url);
+// --------------------------------
+
 // Exibe todos os erros (útil para desenvolvimento)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
