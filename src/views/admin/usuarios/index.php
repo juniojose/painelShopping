@@ -24,7 +24,7 @@ require_once $basePath . '/templates/header.php';
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Gerenciar Usuários</h2>
-        <a href="form.php" class="btn btn-success">Adicionar Novo Usuário</a>
+        <a href="?page=usuarios-form" class="btn btn-success">Adicionar Novo Usuário</a>
     </div>
 
     <?php 
@@ -52,7 +52,7 @@ require_once $basePath . '/templates/header.php';
                                 <td><?= htmlspecialchars($nome) ?></td>
                                 <td><?= htmlspecialchars($email) ?></td>
                                 <td>
-                                    <a href="form.php?id=<?= $id ?>" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="?page=usuarios-form&id=<?= $id ?>" class="btn btn-primary btn-sm">Editar</a>
                                     <?php // Não permite excluir o próprio usuário logado
                                     if ($id != $_SESSION['user_id']): ?>
                                         <a href="../../../controllers/UserController.php?action=delete&id=<?= $id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>

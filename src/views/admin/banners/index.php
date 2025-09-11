@@ -24,7 +24,7 @@ require_once $basePath . '/templates/header.php';
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Gerenciar Banners</h2>
-        <a href="form.php" class="btn btn-success">Adicionar Novo Banner</a>
+        <a href="?page=banners-form" class="btn btn-success">Adicionar Novo Banner</a>
     </div>
 
     <?php 
@@ -53,7 +53,7 @@ require_once $basePath . '/templates/header.php';
                                 <td><img src="<?= htmlspecialchars($url_imagem_banner) ?>" alt="Banner" style="width: 150px; height: auto;"></td>
                                 <td><?= htmlspecialchars($nome) ?></td>
                                 <td>
-                                    <a href="form.php?id=<?= $id ?>" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="?page=banners-form&id=<?= $id ?>" class="btn btn-primary btn-sm">Editar</a>
                                     <a href="../../../controllers/BannerController.php?action=delete&id=<?= $id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este banner?')">Excluir</a>
                                 </td>
                             </tr>
