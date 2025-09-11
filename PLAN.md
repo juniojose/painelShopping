@@ -81,7 +81,9 @@ Este plano descreve os passos para a criação da aplicação "Painel Shopping",
 3.  **Proteger as Rotas Administrativas:** [Concluído]
     *   Criar um script ou função que verifique se o usuário está logado antes de carregar qualquer página da área de admin.
 
-## Fase 4: Área Administrativa - CRUDs
+## Fase 4: Área Administrativa - CRUDs [Em Andamento]
+
+**Status: O CRUD para `Empresas` foi concluído. Próximos passos são os CRUDs de `Banners` e `Usuários`.**
 
 1.  **Criar os Models (`/src/models`):**
     *   `User.php`, `Company.php`, `Banner.php`.
