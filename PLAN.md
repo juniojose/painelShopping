@@ -68,17 +68,17 @@ Este plano descreve os passos para a criação da aplicação "Painel Shopping",
     *   Renderizar os cards das empresas em um grid.
     *   Implementar a lógica JavaScript para que o clique nos links abra o conteúdo em um `iframe`.
 
-## Fase 3: Área Administrativa - Autenticação
+## Fase 3: Área Administrativa - Autenticação [Concluído]
 
-1.  **Criar a Página de Login (`/src/views/admin/login.php`):**
+1.  **Criar a Página de Login (`/src/views/admin/login.php`):** [Concluído]
     *   Formulário com campos para e-mail e senha.
 
-2.  **Desenvolver o Controller de Autenticação (`/src/controllers/AuthController.php`):**
+2.  **Desenvolver o Controller de Autenticação (`/src/controllers/AuthController.php`):** [Concluído]
     *   Lógica para processar o login: verificar o usuário e senha (hash) no banco.
     *   Gerenciar a sessão do PHP (`session_start()`, `$_SESSION`).
     *   Criar a função de logout.
 
-3.  **Proteger as Rotas Administrativas:**
+3.  **Proteger as Rotas Administrativas:** [Concluído]
     *   Criar um script ou função que verifique se o usuário está logado antes de carregar qualquer página da área de admin.
 
 ## Fase 4: Área Administrativa - CRUDs
