@@ -38,7 +38,7 @@ require_once $basePath . '/templates/header.php';
                     <h3><?= $pageTitle ?></h3>
                 </div>
                 <div class="card-body">
-                    <form action="../../../controllers/CompanyController.php?action=<?= $action ?>" method="POST">
+                    <form action="?controller=company&action=<?= $action ?>" method="POST">
                         <?php if ($action === 'update'): ?>
                             <input type="hidden" name="id" value="<?= htmlspecialchars($company->id) ?>">
                         <?php endif; ?>
@@ -59,7 +59,7 @@ require_once $basePath . '/templates/header.php';
                         </div>
 
                         <div class="d-flex justify-content-end">
-                            <a href="index.php" class="btn btn-secondary me-2">Cancelar</a>
+                            <a href="?page=empresas" class="btn btn-secondary me-2">Cancelar</a>
                             <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
                     </form>

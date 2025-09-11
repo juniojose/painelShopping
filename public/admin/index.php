@@ -11,13 +11,34 @@ $basePath = dirname(dirname(__DIR__));
 require_once $basePath . '/config/config.php';
 require_once $basePath . '/src/lib/auth.php';
 
-// Verifica se o usuário está autenticado para qualquer página da área de admin
+// --- ROTEAMENTO DE AÇÕES (CONTROLLERS) ---
+if (isset($_GET['controller'])) {
+    $controller = $_GET['controller'];
+    $action = $_GET['action'] ?? 'index'; // Ação padrão
+
+    $controllerMap = [
+        'user' => $basePath . '/src/controllers/UserController.php',
+        'company' => $basePath . '/src/controllers/CompanyController.php',
+        'banner' => $basePath . '/src/controllers/BannerController.php',
+        'auth' => $basePath . '/src/controllers/AuthController.php',
+    ];
+
+    if (array_key_exists($controller, $controllerMap)) {
+        // O arquivo do controller já tem um switch para a variável $action
+        require $controllerMap[$controller];
+        exit; // Interrompe a execução para não carregar uma view depois
+    }
+}
+
+// --- ROTEAMENTO DE VIEWS ---
+
+// A autenticação é exigida para todas as views, exceto a de login
+// A lógica de login é tratada pelo AuthController, então aqui só precisamos garantir
+// que o usuário esteja logado para ver qualquer outra página.
 require_auth();
 
-// Roteamento simples baseado no parâmetro 'page'
 $page = $_GET['page'] ?? 'dashboard';
 
-// Lista de páginas permitidas para evitar inclusão de arquivos arbitrários
 $allowedPages = [
     'dashboard' => $basePath . '/src/views/admin/dashboard.php',
     'empresas' => $basePath . '/src/views/admin/empresas/index.php',
@@ -28,10 +49,8 @@ $allowedPages = [
     'usuarios-form' => $basePath . '/src/views/admin/usuarios/form.php',
 ];
 
-// Verifica se a página solicitada é válida, senão, carrega o dashboard
 if (array_key_exists($page, $allowedPages)) {
     include $allowedPages[$page];
 } else {
-    // Página não encontrada, carrega o dashboard como padrão
     include $allowedPages['dashboard'];
 }

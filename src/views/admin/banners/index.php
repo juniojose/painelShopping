@@ -54,7 +54,7 @@ require_once $basePath . '/templates/header.php';
                                 <td><?= htmlspecialchars($nome) ?></td>
                                 <td>
                                     <a href="?page=banners-form&id=<?= $id ?>" class="btn btn-primary btn-sm">Editar</a>
-                                    <a href="../../../controllers/BannerController.php?action=delete&id=<?= $id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este banner?')">Excluir</a>
+                                    <a href="?controller=banner&action=delete&id=<?= $id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este banner?')">Excluir</a>
                                 </td>
                             </tr>
                         <?php endwhile; ?>

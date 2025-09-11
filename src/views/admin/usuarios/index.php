@@ -55,7 +55,7 @@ require_once $basePath . '/templates/header.php';
                                     <a href="?page=usuarios-form&id=<?= $id ?>" class="btn btn-primary btn-sm">Editar</a>
                                     <?php // Não permite excluir o próprio usuário logado
                                     if ($id != $_SESSION['user_id']): ?>
-                                        <a href="../../../controllers/UserController.php?action=delete&id=<?= $id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
+                                        <a href="?controller=user&action=delete&id=<?= $id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este usuário?')">Excluir</a>
                                     <?php endif; ?>
                                 </td>
                             </tr>
