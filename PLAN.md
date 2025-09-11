@@ -81,20 +81,18 @@ Este plano descreve os passos para a criação da aplicação "Painel Shopping",
 3.  **Proteger as Rotas Administrativas:** [Concluído]
     *   Criar um script ou função que verifique se o usuário está logado antes de carregar qualquer página da área de admin.
 
-## Fase 4: Área Administrativa - CRUDs [Em Andamento]
+## Fase 4: Área Administrativa - CRUDs [Concluído]
 
-**Status: CRUDs para `Empresas` e `Banners` concluídos. Próximo passo é o CRUD de `Usuários`.**
-
-1.  **Criar os Models (`/src/models`):**
+1.  **Criar os Models (`/src/models`):** [Concluído]
     *   `User.php`, `Company.php`, `Banner.php`.
     *   Cada classe terá métodos para criar, ler, atualizar e deletar registros (`create()`, `findById()`, `findAll()`, `update()`, `delete()`). Usar PDO e prepared statements para segurança.
 
-2.  **Desenvolver as Views do Admin (`/src/views/admin/`):**
+2.  **Desenvolver as Views do Admin (`/src/views/admin/`):** [Concluído]
     *   Para cada CRUD (usuários, empresas, banners), criar:
         *   `index.php`: Listagem dos registros com botões de editar/excluir.
         *   `form.php`: Formulário para criar e editar registros.
 
-3.  **Desenvolver os Controllers do Admin (`/src/controllers/`):**
+3.  **Desenvolver os Controllers do Admin (`/src/controllers/`):** [Concluído]
     *   `UserController.php`, `CompanyController.php`, `BannerController.php`.
     *   Cada controller irá gerenciar a lógica do seu respectivo CRUD, recebendo os dados do formulário, chamando os métodos do Model e redirecionando para as Views corretas.
 

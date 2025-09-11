@@ -4,7 +4,10 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// Includes necessários para o controller
 require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../models/User.php';
 
 // Roteamento de ações
 $action = $_GET['action'] ?? 'login';
@@ -32,15 +35,18 @@ function handleLogin() {
     $email = $_POST['email'] ?? '';
     $senha = $_POST['senha'] ?? '';
 
-    // --- LÓGICA DE AUTENTICAÇÃO (SIMULADA) ---
-    // Na Fase 4, isso será substituído por uma consulta ao banco de dados usando o UserModel.
-    $usuario_valido = ('admin@example.com' === $email);
-    $senha_valida = ('password123' === $senha); // Em um caso real, usaríamos password_verify()
+    // Conecta ao banco e instancia o model
+    $db = Database::getInstance();
+    $user = new User($db);
 
-    if ($usuario_valido && $senha_valida) {
+    // Busca o usuário pelo e-mail
+    $userData = $user->findByEmail($email);
+
+    // Verifica se o usuário existe e se a senha está correta
+    if ($userData && password_verify($senha, $userData['senha'])) {
         // Login bem-sucedido: armazena informações na sessão
-        $_SESSION['user_id'] = 1; // ID do usuário (simulado)
-        $_SESSION['user_nome'] = 'Administrador';
+        $_SESSION['user_id'] = $userData['id'];
+        $_SESSION['user_nome'] = $userData['nome'];
 
         // Redireciona para o painel de controle
         header('Location: ../views/admin/dashboard.php');
