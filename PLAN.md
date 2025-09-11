@@ -2,9 +2,9 @@
 
 Este plano descreve os passos para a criação da aplicação "Painel Shopping", dividido em fases lógicas.
 
-## Fase 1: Estrutura, Configuração e Banco de Dados
+## Fase 1: Estrutura, Configuração e Banco de Dados [Concluído]
 
-1.  **Criar a Estrutura de Diretórios:**
+1.  **Criar a Estrutura de Diretórios:** [Concluído]
     ```
     /painelShopping
     |-- /config           # Arquivos de configuração (banco de dados, tema)
@@ -17,10 +17,10 @@ Este plano descreve os passos para a criação da aplicação "Painel Shopping",
     `-- README.md
     ```
 
-2.  **Criar o Arquivo de Configuração (`config/config.php`):**
+2.  **Criar o Arquivo de Configuração (`config/config.php`):** [Concluído]
     *   Definir constantes ou um array para as configurações de tema (cores, logo) e para a conexão com o banco de dados (host, user, pass, dbname).
 
-3.  **Definir o Schema do Banco de Dados (`database.sql`):**
+3.  **Definir o Schema do Banco de Dados (`database.sql`):** [Concluído]
     *   Criar o script SQL para gerar as tabelas necessárias.
 
     ```sql
