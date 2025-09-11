@@ -56,7 +56,7 @@ require_once __DIR__ . '/../config/config.php';
             <a href="<?= BASE_URL ?>" class="d-flex align-items-center text-decoration-none" style="color: inherit;">
                 <img src="<?= htmlspecialchars(THEME_CONFIG['header_logo_url']); ?>" alt="Logo" height="50">
             </a>
-            <a href="https://wa.me/5511999999999" target="_blank" class="btn btn-success">
+            <a href="https://wa.me/556198343743" target="_blank" class="btn btn-success">
                 <i class="bi bi-whatsapp"></i> Contato
             </a>
         </div>
