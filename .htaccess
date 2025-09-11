@@ -1,29 +1,15 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    
-    # Define o caminho base para o mod_rewrite em subdiretórios
-    RewriteBase /painelShopping/
 
-    # Redireciona a requisição da raiz para a pasta /public
+    # Se a requisição já aponta para a pasta public, não faz nada.
+    # Isso previne o loop de redirecionamento.
+    RewriteRule ^public/ - [L]
+
+    # Redireciona a raiz da aplicação (URL vazia) para a pasta /public
     RewriteRule ^$ public/ [L]
 
-    # Redireciona todas as outras requisições para a pasta /public
-    # A menos que o arquivo/diretório já exista na raiz (ex: .git)
+    # Redireciona todas as outras requisições que não são arquivos ou pastas existentes para /public
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
-
-# Impede que os diretórios sejam listados
-Options -Indexes
-
-# Protege o próprio arquivo .htaccess de ser acessado pelo navegador
-<Files .htaccess>
-    Require all denied
-</Files>
-
-# Protege arquivos sensíveis na raiz do projeto
-<FilesMatch "^((README|PLAN|REQUISITOS)\.md|database\.sql|composer\.(json|lock))$">
-    Require all denied
-</FilesMatch>
