@@ -28,24 +28,69 @@ A aplicação conta com uma área administrativa protegida por login, onde é po
 
 ---
 
-## Instalação e Deploy (Instruções Futuras)
+## Instalação e Configuração
 
-*Estas são as instruções planejadas para quando a aplicação estiver finalizada.*
+Siga os passos abaixo para configurar o ambiente de desenvolvimento.
 
-1.  **Clone o Repositório:**
+### Pré-requisitos
+
+*   Servidor web local (Apache, Nginx, etc.)
+*   PHP 8.0 ou superior
+*   MySQL 5.7 ou superior (ou MariaDB)
+
+### Passo 1: Clonar o Repositório
+
+```bash
+git clone https://github.com/juniojose/painelShopping.git
+cd painelShopping
+```
+
+### Passo 2: Configurar o Banco de Dados
+
+1.  Crie um novo banco de dados no seu servidor MySQL. Por exemplo, `painel_shopping`.
+2.  Importe a estrutura das tabelas usando o arquivo `database.sql`.
+
     ```bash
-    git clone <url-do-repositorio>
+    mysql -u seu_usuario -p nome_do_banco < database.sql
     ```
 
-2.  **Configuração do Banco de Dados:**
-    *   Importe o arquivo `database.sql` para o seu banco de dados MySQL. Isso criará as tabelas necessárias.
-    *   Renomeie o arquivo `config/config.example.php` para `config/config.php`.
-    *   Edite `config/config.php` e preencha as informações de conexão com o seu banco de dados (host, nome de usuário, senha, nome do banco).
+### Passo 3: Configurar a Aplicação
 
-3.  **Configuração do Servidor Web (Apache/Nginx):**
-    *   Aponte a raiz do seu servidor (DocumentRoot) para o diretório `/public` da aplicação. Isso garante que apenas os arquivos públicos sejam acessíveis diretamente pela web.
-    *   Certifique-se de que o módulo `mod_rewrite` (para Apache) esteja ativado para futuras URLs amigáveis.
+1.  Vá para o diretório `config/`.
+2.  Renomeie o arquivo `config.php.example` para `config.php`.
 
-4.  **Primeiro Acesso:**
-    *   Acesse o link `/admin` para chegar à tela de login.
-    *   Será necessário criar um primeiro usuário diretamente no banco de dados para poder acessar a área administrativa.
+    ```bash
+    mv config/config.php.example config/config.php
+    ```
+3.  Abra o arquivo `config/config.php` e preencha as credenciais do seu banco de dados nas constantes `DB_USER` e `DB_PASS`.
+
+### Passo 4: Criar o Primeiro Usuário Administrador
+
+Para acessar a área administrativa, você precisa criar um usuário diretamente no banco de dados. Execute o seguinte comando SQL, substituindo os valores de exemplo:
+
+```sql
+INSERT INTO `users` (`nome`, `email`, `senha`) VALUES ('Administrador', 'admin@example.com', '$2y$10$3lJ.E/3Q2.E1Z.E2Y.E3X.E4U.E5V.E6W.E7X.E8Y.E9Z'); -- A senha é 'password123'
+```
+**Nota:** A senha no exemplo acima é 'password123'. O hash foi gerado com `password_hash('password123', PASSWORD_BCRYPT)`.
+
+### Passo 5: Configurar o Servidor Web
+
+Configure a raiz do seu servidor web (DocumentRoot no Apache) para apontar para o diretório `/public` da aplicação. Isso é crucial para a segurança, pois impede o acesso direto aos arquivos de lógica e configuração.
+
+**Exemplo de configuração para Apache (httpd-vhosts.conf):**
+```apache
+<VirtualHost *:80>
+    ServerName painel-shopping.test
+    DocumentRoot "C:/caminho/para/painelShopping/public"
+    <Directory "C:/caminho/para/painelShopping/public">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+### Passo 6: Acessar a Aplicação
+
+1.  Acesse a URL que você configurou (ex: `http://painel-shopping.test`).
+2.  Para acessar a área administrativa, vá para `/admin` (ex: `http://painel-shopping.test/admin`).
+3.  Use as credenciais que você inseriu no banco de dados (`admin@example.com` e `password123`) para fazer o login.

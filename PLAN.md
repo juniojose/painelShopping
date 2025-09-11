@@ -96,18 +96,18 @@ Este plano descreve os passos para a criação da aplicação "Painel Shopping",
     *   `UserController.php`, `CompanyController.php`, `BannerController.php`.
     *   Cada controller irá gerenciar a lógica do seu respectivo CRUD, recebendo os dados do formulário, chamando os métodos do Model e redirecionando para as Views corretas.
 
-## Fase 5: Finalização e Testes
+## Fase 5: Finalização e Testes [Concluído]
 
-1.  **Revisão de Segurança:**
+1.  **Revisão de Segurança:** [Concluído]
     *   Garantir que todas as entradas do usuário (formulários, URLs) estão sendo devidamente validadas e sanitizadas (ex: `htmlspecialchars`).
     *   Confirmar que todas as queries SQL usam prepared statements.
 
-2.  **Testes de Responsividade:**
+2.  **Testes de Responsividade:** [Concluído]
     *   Verificar a aparência e funcionalidade da aplicação em diferentes tamanhos de tela (desktop, tablet, mobile).
 
-3.  **Refatoração e Limpeza:**
+3.  **Refatoração e Limpeza:** [Concluído]
     *   Revisar o código em busca de duplicações e oportunidades de melhoria.
     *   Adicionar comentários onde a lógica for complexa.
 
-4.  **Atualizar o `README.md`:**
+4.  **Atualizar o `README.md`:** [Concluído]
     *   Adicionar instruções detalhadas de como instalar e configurar a aplicação em um ambiente de produção.

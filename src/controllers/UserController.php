@@ -6,10 +6,12 @@ require_once $basePath . '/src/lib/auth.php';
 require_auth();
 require_once $basePath . '/config/database.php';
 require_once $basePath . '/src/models/User.php';
+require_once $basePath . '/src/lib/helpers.php'; // Inclui o novo helper
 
 // Inicialização
 $db = Database::getInstance();
 $user = new User($db);
+$redirect_url = '../views/admin/usuarios/index.php';
 
 $action = $_GET['action'] ?? '';
 
@@ -21,13 +23,10 @@ switch ($action) {
             $user->email = $_POST['email'];
             $user->senha = $_POST['senha'];
 
-            if ($user->create()) {
-                $_SESSION['message'] = 'Usuário criado com sucesso!';
-            } else {
-                $_SESSION['message'] = 'Erro ao criar o usuário.';
-            }
-            redirectToList();
-        });
+            $_SESSION['message'] = $user->create() 
+                ? 'Usuário criado com sucesso!' 
+                : 'Erro ao criar o usuário.';
+        }, $redirect_url);
         break;
 
     case 'update':
@@ -36,51 +35,31 @@ switch ($action) {
             $user->nome = $_POST['nome'];
             $user->email = $_POST['email'];
             
-            // Só atualiza a senha se uma nova for fornecida
             if (!empty($_POST['senha'])) {
                 $user->senha = $_POST['senha'];
             }
 
-            if ($user->update()) {
-                $_SESSION['message'] = 'Usuário atualizado com sucesso!';
-            } else {
-                $_SESSION['message'] = 'Erro ao atualizar o usuário.';
-            }
-            redirectToList();
-        });
+            $_SESSION['message'] = $user->update() 
+                ? 'Usuário atualizado com sucesso!' 
+                : 'Erro ao atualizar o usuário.';
+        }, $redirect_url);
         break;
 
     case 'delete':
         if (isset($_GET['id'])) {
-            // Previne que o usuário logado se auto-exclua
             if ($_GET['id'] == $_SESSION['user_id']) {
                 $_SESSION['message'] = 'Erro: Você não pode excluir seu próprio usuário.';
             } else {
                 $user->id = $_GET['id'];
-                if ($user->delete()) {
-                    $_SESSION['message'] = 'Usuário excluído com sucesso!';
-                } else {
-                    $_SESSION['message'] = 'Erro ao excluir o usuário.';
-                }
+                $_SESSION['message'] = $user->delete() 
+                    ? 'Usuário excluído com sucesso!' 
+                    : 'Erro ao excluir o usuário.';
             }
         }
-        redirectToList();
+        redirect($redirect_url);
         break;
 
     default:
-        redirectToList();
+        redirect($redirect_url);
         break;
-}
-
-function handlePostRequest(callable $callback) {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $callback();
-    } else {
-        redirectToList();
-    }
-}
-
-function redirectToList() {
-    header('Location: ../views/admin/usuarios/index.php');
-    exit;
 }
