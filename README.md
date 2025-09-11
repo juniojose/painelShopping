@@ -75,7 +75,15 @@ INSERT INTO `users` (`nome`, `email`, `senha`) VALUES ('Administrador', 'admin@e
 
 ### Passo 5: Configurar o Servidor Web
 
-Configure a raiz do seu servidor web (DocumentRoot no Apache) para apontar para o diretório `/public` da aplicação. Isso é crucial para a segurança, pois impede o acesso direto aos arquivos de lógica e configuração.
+A aplicação utiliza um arquivo `.htaccess` na raiz para direcionar todo o tráfego para o diretório `/public`, que é o ponto de entrada correto e seguro. 
+
+Para que isso funcione, certifique-se de que seu servidor Apache tenha o módulo `mod_rewrite` ativado e que ele permita a leitura de arquivos `.htaccess` (com a diretiva `AllowOverride All` no diretório do projeto).
+
+Na maioria das configurações de hospedagem compartilhada e servidores locais padrão (XAMPP, WAMP), isso já vem ativado.
+
+#### Alternativa Recomendada: Configuração de Virtual Host
+
+Se você tiver acesso total à configuração do servidor, a abordagem mais segura é apontar o `DocumentRoot` do seu domínio diretamente para a pasta `/public`. Isso torna impossível o acesso a qualquer arquivo fora dela. O arquivo `.htaccess` na raiz não seria necessário neste caso.
 
 **Exemplo de configuração para Apache (httpd-vhosts.conf):**
 ```apache
