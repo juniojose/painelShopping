@@ -12,7 +12,7 @@ require_once $basePath . '/templates/header.php';
                     <h3>Painel Administrativo</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/controllers/AuthController.php?action=login" method="POST">
+                    <form action="<?= BASE_URL ?>/src/controllers/AuthController.php?action=login" method="POST">
                         <?php 
                         // Exibe mensagens de erro, se houver
                         if (isset($_SESSION['error_message'])) {

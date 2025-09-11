@@ -1,5 +1,8 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    
+    # Define o caminho base para o mod_rewrite em subdiretórios
+    RewriteBase /painelShopping/
 
     # Redireciona a requisição da raiz para a pasta /public
     RewriteRule ^$ public/ [L]

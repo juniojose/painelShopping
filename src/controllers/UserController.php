@@ -11,7 +11,7 @@ require_once $basePath . '/src/lib/helpers.php'; // Inclui o novo helper
 // Inicialização
 $db = Database::getInstance();
 $user = new User($db);
-$redirect_url = '../views/admin/usuarios/index.php';
+$redirect_url = BASE_URL . '/src/views/admin/usuarios/index.php';
 
 $action = $_GET['action'] ?? '';
 
