@@ -13,7 +13,7 @@ require_once $basePath . '/templates/header.php';
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Dashboard</h2>
-        <a href="../../controllers/AuthController.php?action=logout" class="btn btn-danger">Sair</a>
+        <a href="?controller=auth&action=logout" class="btn btn-danger">Sair</a>
     </div>
 
     <div class="alert alert-success">
