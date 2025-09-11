@@ -52,16 +52,16 @@ Este plano descreve os passos para a criação da aplicação "Painel Shopping",
     );
     ```
 
-## Fase 2: Layout Base e Área Pública
+## Fase 2: Layout Base e Área Pública [Concluído]
 
-1.  **Integrar o Bootstrap:**
+1.  **Integrar o Bootstrap:** [Concluído]
     *   Adicionar o CDN do Bootstrap no template principal.
 
-2.  **Criar os Templates Base (`/templates`):**
+2.  **Criar os Templates Base (`/templates`):** [Concluído]
     *   `header.php`: Conterá a estrutura do header, lendo as configurações do `config.php`.
     *   `footer.php`: Conterá a estrutura do footer, com o link para o painel admin.
 
-3.  **Desenvolver a Página Principal (`/public/index.php`):**
+3.  **Desenvolver a Página Principal (`/public/index.php`):** [Concluído]
     *   Incluir `header.php` e `footer.php`.
     *   Buscar os banners e empresas do banco de dados.
     *   Renderizar o banner "Hero".
