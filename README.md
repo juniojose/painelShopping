@@ -69,9 +69,9 @@ cd painelShopping
 Para acessar a área administrativa, você precisa criar um usuário diretamente no banco de dados. Execute o seguinte comando SQL, substituindo os valores de exemplo:
 
 ```sql
-INSERT INTO `users` (`nome`, `email`, `senha`) VALUES ('Administrador', 'admin@example.com', '$2y$10$3lJ.E/3Q2.E1Z.E2Y.E3X.E4U.E5V.E6W.E7X.E8Y.E9Z'); -- A senha é 'password123'
+INSERT INTO `users` (`nome`, `email`, `senha`) VALUES ('Administrador', 'admin@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'); -- A senha é 'password123'
 ```
-**Nota:** A senha no exemplo acima é 'password123'. O hash foi gerado com `password_hash('password123', PASSWORD_BCRYPT)`.
+**Nota:** A senha no exemplo acima é 'password123'. O hash foi gerado com `password_hash('password123', PASSWORD_DEFAULT)`.
 
 ### Passo 5: Configurar o Servidor Web
 
