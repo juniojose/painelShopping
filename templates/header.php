@@ -53,7 +53,7 @@ require_once __DIR__ . '/../config/config.php';
 <header style="background-color: <?= htmlspecialchars(THEME_CONFIG['header_cor_fundo']); ?>; color: <?= htmlspecialchars(THEME_CONFIG['header_cor_letra']); ?>;">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-3">
-            <a href="/" class="d-flex align-items-center text-decoration-none" style="color: inherit;">
+            <a href="<?= BASE_URL ?>" class="d-flex align-items-center text-decoration-none" style="color: inherit;">
                 <img src="<?= htmlspecialchars(THEME_CONFIG['header_logo_url']); ?>" alt="Logo" height="50">
             </a>
             <a href="https://wa.me/5511999999999" target="_blank" class="btn btn-success">
