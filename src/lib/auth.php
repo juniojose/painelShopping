@@ -15,7 +15,7 @@ function require_auth() {
         
         // Redireciona para a página de login usando a BASE_URL
         // É preciso incluir o config.php antes de chamar esta função para que BASE_URL esteja definida
-        header('Location: ' . BASE_URL . '/src/views/admin/login.php');
+        header('Location: ' . BASE_URL . '/public/admin/');
         exit; // Interrompe a execução do script
     }
 }

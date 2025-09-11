@@ -21,14 +21,14 @@ switch ($action) {
         break;
     default:
         // Redireciona para a página de login se a ação for inválida
-        header('Location: ../views/admin/login.php');
+        header('Location: .');
         exit;
 }
 
 function handleLogin() {
     // Verifica se o método da requisição é POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Location: ../views/admin/login.php');
+        header('Location: .');
         exit;
     }
 
@@ -49,12 +49,12 @@ function handleLogin() {
         $_SESSION['user_nome'] = $userData['nome'];
 
         // Redireciona para o painel de controle
-        header('Location: ../views/admin/dashboard.php');
+        header('Location: ?page=dashboard');
         exit;
     } else {
         // Login falhou: define mensagem de erro e redireciona de volta
         $_SESSION['error_message'] = 'E-mail ou senha inválidos.';
-        header('Location: ../views/admin/login.php');
+        header('Location: .');
         exit;
     }
 }
@@ -74,6 +74,6 @@ function handleLogout() {
     session_destroy();
 
     // Redireciona para a página de login
-    header('Location: ../views/admin/login.php');
+    header('Location: .');
     exit;
 }
