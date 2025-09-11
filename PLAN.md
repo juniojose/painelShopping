@@ -83,7 +83,7 @@ Este plano descreve os passos para a criação da aplicação "Painel Shopping",
 
 ## Fase 4: Área Administrativa - CRUDs [Em Andamento]
 
-**Status: O CRUD para `Empresas` foi concluído. Próximos passos são os CRUDs de `Banners` e `Usuários`.**
+**Status: CRUDs para `Empresas` e `Banners` concluídos. Próximo passo é o CRUD de `Usuários`.**
 
 1.  **Criar os Models (`/src/models`):**
     *   `User.php`, `Company.php`, `Banner.php`.
