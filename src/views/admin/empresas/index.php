@@ -24,7 +24,7 @@ require_once $basePath . '/templates/header.php';
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Gerenciar Empresas</h2>
-        <a href="form.php" class="btn btn-success">Adicionar Nova Empresa</a>
+        <a href="?page=empresas-form" class="btn btn-success">Adicionar Nova Empresa</a>
     </div>
 
     <?php 
@@ -53,8 +53,8 @@ require_once $basePath . '/templates/header.php';
                                 <td><img src="<?= htmlspecialchars($url_logo) ?>" alt="Logo" style="width: 100px; height: auto;"></td>
                                 <td><?= htmlspecialchars($nome) ?></td>
                                 <td>
-                                    <a href="form.php?id=<?= $id ?>" class="btn btn-primary btn-sm">Editar</a>
-                                    <a href="../../../controllers/CompanyController.php?action=delete&id=<?= $id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esta empresa?')">Excluir</a>
+                                    <a href="?page=empresas-form&id=<?= $id ?>" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="?controller=company&action=delete&id=<?= $id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esta empresa?')">Excluir</a>
                                 </td>
                             </tr>
                         <?php endwhile; ?>

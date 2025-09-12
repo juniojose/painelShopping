@@ -13,7 +13,7 @@ require_once $basePath . '/templates/header.php';
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Dashboard</h2>
-        <a href="../../controllers/AuthController.php?action=logout" class="btn btn-danger">Sair</a>
+        <a href="?controller=auth&action=logout" class="btn btn-danger">Sair</a>
     </div>
 
     <div class="alert alert-success">
@@ -30,7 +30,7 @@ require_once $basePath . '/templates/header.php';
                 <div class="card-body">
                     <h5 class="card-title">Gerenciar Empresas</h5>
                     <p class="card-text">Adicionar, editar ou remover empresas.</p>
-                    <a href="#" class="btn btn-primary">Ir para Empresas</a>
+                    <a href="?page=empresas" class="btn btn-primary">Ir para Empresas</a>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@ require_once $basePath . '/templates/header.php';
                 <div class="card-body">
                     <h5 class="card-title">Gerenciar Banners</h5>
                     <p class="card-text">Adicionar, editar ou remover banners.</p>
-                    <a href="#" class="btn btn-primary">Ir para Banners</a>
+                    <a href="?page=banners" class="btn btn-primary">Ir para Banners</a>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@ require_once $basePath . '/templates/header.php';
                 <div class="card-body">
                     <h5 class="card-title">Gerenciar Usuários</h5>
                     <p class="card-text">Adicionar, editar ou remover usuários.</p>
-                    <a href="#" class="btn btn-primary">Ir para Usuários</a>
+                    <a href="?page=usuarios" class="btn btn-primary">Ir para Usuários</a>
                 </div>
             </div>
         </div>
