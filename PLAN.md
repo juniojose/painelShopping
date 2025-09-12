@@ -134,11 +134,11 @@ Esta fase foca em melhorar a usabilidade, performance e funcionalidade da aplica
 
 *   **Etapa 2.1: Isolar o Início da Sessão**
     *   **Ação:** Remover a chamada `session_start()` do cabeçalho global (`templates/header.php`) para que a sessão não seja mais iniciada desnecessariamente em todas as páginas (como a home pública).
-    *   **Status:** [Pendente]
+    *   **Status:** [Concluído]
 
 *   **Etapa 2.2: Garantir a Sessão na Área de Admin**
     *   **Ação:** Verificar e garantir que os pontos de entrada da área administrativa (como `public/admin/index.php` e os controllers) continuam iniciando a sessão corretamente, de forma que o login e a proteção de rotas não sejam afetados.
-    *   **Status:** [Pendente]
+    *   **Status:** [Concluído]
 
 ### 3. Conteúdo Dinâmico na Página Inicial
 
