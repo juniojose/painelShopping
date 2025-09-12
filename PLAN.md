@@ -132,12 +132,12 @@ Esta fase foca em melhorar a usabilidade, performance e funcionalidade da aplica
 
 ### 2. Otimização de Performance (Lentidão no Carregamento)
 
-*   **Etapa 2.1: Criar uma Classe de Cache**
-    *   **Ação:** Desenvolver uma classe PHP (`src/lib/Cache.php`) para gerenciar o salvamento e a leitura de dados em arquivos de cache com tempo de expiração.
+*   **Etapa 2.1: Isolar o Início da Sessão**
+    *   **Ação:** Remover a chamada `session_start()` do cabeçalho global (`templates/header.php`) para que a sessão não seja mais iniciada desnecessariamente em todas as páginas (como a home pública).
     *   **Status:** [Pendente]
 
-*   **Etapa 2.2: Integrar o Cache na Página Inicial**
-    *   **Ação:** Utilizar a classe de cache na `public/index.php` para armazenar temporariamente os dados de banners e empresas, evitando consultas repetitivas ao banco.
+*   **Etapa 2.2: Garantir a Sessão na Área de Admin**
+    *   **Ação:** Verificar e garantir que os pontos de entrada da área administrativa (como `public/admin/index.php` e os controllers) continuam iniciando a sessão corretamente, de forma que o login e a proteção de rotas não sejam afetados.
     *   **Status:** [Pendente]
 
 ### 3. Conteúdo Dinâmico na Página Inicial
