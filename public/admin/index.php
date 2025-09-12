@@ -4,6 +4,9 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// Define que estamos na área administrativa para carregar componentes específicos
+$is_admin_area = true;
+
 // Define o caminho raiz do projeto
 $basePath = dirname(dirname(__DIR__));
 
@@ -33,14 +36,16 @@ if (isset($_GET['controller'])) {
 // --- ROTEAMENTO DE VIEWS ---
 
 // Se o usuário não estiver logado, a única página que ele pode ver é a de login.
-// O formulário de login é tratado pelo AuthController, que já foi processado acima.
+// O formulário de login (e seu layout) é tratado pela própria view.
 if (!isset($_SESSION['user_id'])) {
-    // Garante que a view de login seja incluída se nenhum controller foi chamado.
     if (!isset($_GET['controller'])) {
         include $basePath . '/src/views/admin/login.php';
     }
 } else {
-    // Se o usuário ESTÁ logado, processa a navegação pelas views.
+    // Se o usuário ESTÁ logado, carrega o layout principal do admin que envolve o conteúdo.
+    require_once $basePath . '/templates/header.php';
+
+    // Roteamento da view de conteúdo
     $page = $_GET['page'] ?? 'dashboard';
 
     $allowedPages = [
@@ -58,4 +63,6 @@ if (!isset($_SESSION['user_id'])) {
     } else {
         include $allowedPages['dashboard'];
     }
+
+    require_once $basePath . '/templates/footer.php';
 }

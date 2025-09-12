@@ -63,4 +63,11 @@ require_once __DIR__ . '/../config/config.php';
     </div>
 </header>
 
+<?php
+// Se estiver na área administrativa, carrega o menu de navegação do admin
+if (isset($is_admin_area) && $is_admin_area) {
+    require_once __DIR__ . '/admin_nav.php';
+}
+?>
+
 <main>

@@ -120,15 +120,15 @@ Esta fase foca em melhorar a usabilidade, performance e funcionalidade da aplica
 
 *   **Etapa 1.1: Criar o Componente do Menu**
     *   **Ação:** Criar um novo arquivo (`templates/admin_nav.php`) contendo o HTML de uma barra de navegação com links para as seções principais.
-    *   **Status:** [Pendente]
+    *   **Status:** [Concluído]
 
-*   **Etapa 1.2: Criar um Layout Centralizado para o Admin**
-    *   **Ação:** Criar um novo arquivo de cabeçalho (`templates/admin_header.php`) que incluirá o menu da Etapa 1.1.
-    *   **Status:** [Pendente]
+*   **Etapa 1.2: Integrar o Menu e Centralizar o Layout**
+    *   **Ação:** Modificar o `header.php` para incluir o novo menu condicionalmente na área de admin. Centralizar a chamada do `header` e `footer` no roteador `public/admin/index.php`.
+    *   **Status:** [Concluído]
 
-*   **Etapa 1.3: Aplicar o Layout Centralizado**
-    *   **Ação:** Modificar o roteador (`public/admin/index.php`) para "envolver" todas as páginas do admin com o novo layout de cabeçalho e rodapé, centralizando a estrutura.
-    *   **Status:** [Pendente]
+*   **Etapa 1.3: Limpar Views Redundantes**
+    *   **Ação:** Remover as chamadas `require_once` para `header.php` e `footer.php` de todos os arquivos de view do admin, uma vez que o layout agora é centralizado.
+    *   **Status:** [Concluído]
 
 ### 2. Otimização de Performance (Lentidão no Carregamento)
 

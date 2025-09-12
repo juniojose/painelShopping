@@ -26,8 +26,7 @@ if (isset($_GET['id'])) {
     }
 }
 
-// Inclui o cabeçalho
-require_once $basePath . '/templates/header.php';
+
 ?>
 
 <div class="container mt-5">
@@ -69,4 +68,4 @@ require_once $basePath . '/templates/header.php';
     </div>
 </div>
 
-<?php require_once $basePath . '/templates/footer.php'; ?>
+

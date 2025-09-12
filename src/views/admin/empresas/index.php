@@ -17,8 +17,7 @@ $company = new Company($db);
 $result = $company->findAll();
 $num = $result->rowCount();
 
-// Inclui o cabeçalho
-require_once $basePath . '/templates/header.php';
+
 ?>
 
 <div class="container mt-5">
@@ -67,4 +66,4 @@ require_once $basePath . '/templates/header.php';
     </div>
 </div>
 
-<?php require_once $basePath . '/templates/footer.php'; ?>
+
