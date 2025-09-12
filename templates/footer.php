@@ -4,7 +4,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-3">
             <small>Plataforma feita por kmkz.ai.br - todos os direitos reservados</small>
-            <a href="/admin" style="color: inherit;">Painel Admin</a>
+            <a href="<?= BASE_URL ?>/admin" style="color: inherit;">Painel Admin</a>
         </div>
     </div>
 </footer>

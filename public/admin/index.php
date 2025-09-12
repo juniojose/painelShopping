@@ -32,25 +32,30 @@ if (isset($_GET['controller'])) {
 
 // --- ROTEAMENTO DE VIEWS ---
 
-// A autenticação é exigida para todas as views, exceto a de login
-// A lógica de login é tratada pelo AuthController, então aqui só precisamos garantir
-// que o usuário esteja logado para ver qualquer outra página.
-require_auth();
-
-$page = $_GET['page'] ?? 'dashboard';
-
-$allowedPages = [
-    'dashboard' => $basePath . '/src/views/admin/dashboard.php',
-    'empresas' => $basePath . '/src/views/admin/empresas/index.php',
-    'empresas-form' => $basePath . '/src/views/admin/empresas/form.php',
-    'banners' => $basePath . '/src/views/admin/banners/index.php',
-    'banners-form' => $basePath . '/src/views/admin/banners/form.php',
-    'usuarios' => $basePath . '/src/views/admin/usuarios/index.php',
-    'usuarios-form' => $basePath . '/src/views/admin/usuarios/form.php',
-];
-
-if (array_key_exists($page, $allowedPages)) {
-    include $allowedPages[$page];
+// Se o usuário não estiver logado, a única página que ele pode ver é a de login.
+// O formulário de login é tratado pelo AuthController, que já foi processado acima.
+if (!isset($_SESSION['user_id'])) {
+    // Garante que a view de login seja incluída se nenhum controller foi chamado.
+    if (!isset($_GET['controller'])) {
+        include $basePath . '/src/views/admin/login.php';
+    }
 } else {
-    include $allowedPages['dashboard'];
+    // Se o usuário ESTÁ logado, processa a navegação pelas views.
+    $page = $_GET['page'] ?? 'dashboard';
+
+    $allowedPages = [
+        'dashboard' => $basePath . '/src/views/admin/dashboard.php',
+        'empresas' => $basePath . '/src/views/admin/empresas/index.php',
+        'empresas-form' => $basePath . '/src/views/admin/empresas/form.php',
+        'banners' => $basePath . '/src/views/admin/banners/index.php',
+        'banners-form' => $basePath . '/src/views/admin/banners/form.php',
+        'usuarios' => $basePath . '/src/views/admin/usuarios/index.php',
+        'usuarios-form' => $basePath . '/src/views/admin/usuarios/form.php',
+    ];
+
+    if (array_key_exists($page, $allowedPages)) {
+        include $allowedPages[$page];
+    } else {
+        include $allowedPages['dashboard'];
+    }
 }

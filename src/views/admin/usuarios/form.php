@@ -20,7 +20,7 @@ if (isset($_GET['id'])) {
         $action = 'update';
     } else {
         $_SESSION['message'] = 'Erro: Usuário não encontrado.';
-        header('Location: index.php');
+        header('Location: ?page=usuarios');
         exit;
     }
 }

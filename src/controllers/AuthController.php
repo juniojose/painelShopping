@@ -21,14 +21,14 @@ switch ($action) {
         break;
     default:
         // Redireciona para a página de login se a ação for inválida
-        header('Location: .');
+        header('Location: ' . BASE_URL . '/admin/');
         exit;
 }
 
 function handleLogin() {
     // Verifica se o método da requisição é POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Location: .');
+        header('Location: ' . BASE_URL . '/admin/');
         exit;
     }
 
@@ -54,7 +54,7 @@ function handleLogin() {
     } else {
         // Login falhou: define mensagem de erro e redireciona de volta
         $_SESSION['error_message'] = 'E-mail ou senha inválidos.';
-        header('Location: .');
+        header('Location: ' . BASE_URL . '/admin/');
         exit;
     }
 }

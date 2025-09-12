@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Opcional: Lógica para voltar à página inicial (ex: clicando no logo)
-    const homeLink = document.querySelector('header a[href="/"]');
+    const homeLink = document.getElementById('home-logo-link');
     if(homeLink) {
         homeLink.addEventListener('click', function(event) {
             event.preventDefault();

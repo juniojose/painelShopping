@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
     } else {
         // Se o ID não for encontrado, redireciona com erro (opcional)
         $_SESSION['message'] = 'Erro: Empresa não encontrada.';
-        header('Location: index.php');
+        header('Location: ?page=empresas');
         exit;
     }
 }
