@@ -1,0 +1,22 @@
+# Arquivos de configuração local. NUNCA commite isso.
+/config/config.php
+.env
+
+# Dependências de gerenciadores de pacotes
+/vendor/
+/node_modules/
+
+# Arquivos de log
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de sistema e de IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace

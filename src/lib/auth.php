@@ -13,9 +13,8 @@ function require_auth() {
         // Armazena uma mensagem de erro para exibir na página de login
         $_SESSION['error_message'] = 'Você precisa fazer login para acessar esta página.';
         
-        // Redireciona para a página de login usando a BASE_URL
-        // É preciso incluir o config.php antes de chamar esta função para que BASE_URL esteja definida
-        header('Location: ' . BASE_URL . '/src/views/admin/login.php');
+        // Redireciona para a página de login pública (o .htaccess cuidará do resto)
+        header('Location: ' . BASE_URL . '/admin/');
         exit; // Interrompe a execução do script
     }
 }
