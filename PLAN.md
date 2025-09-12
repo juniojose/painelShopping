@@ -111,3 +111,51 @@ Este plano descreve os passos para a criação da aplicação "Painel Shopping",
 
 4.  **Atualizar o `README.md`:** [Concluído]
     *   Adicionar instruções detalhadas de como instalar e configurar a aplicação em um ambiente de produção.
+
+## Fase 6: Melhorias e Otimizações [Em Andamento]
+
+Esta fase foca em melhorar a usabilidade, performance e funcionalidade da aplicação com base no feedback do usuário.
+
+### 1. Melhoria na Navegação do Admin
+
+*   **Etapa 1.1: Criar o Componente do Menu**
+    *   **Ação:** Criar um novo arquivo (`templates/admin_nav.php`) contendo o HTML de uma barra de navegação com links para as seções principais.
+    *   **Status:** [Pendente]
+
+*   **Etapa 1.2: Criar um Layout Centralizado para o Admin**
+    *   **Ação:** Criar um novo arquivo de cabeçalho (`templates/admin_header.php`) que incluirá o menu da Etapa 1.1.
+    *   **Status:** [Pendente]
+
+*   **Etapa 1.3: Aplicar o Layout Centralizado**
+    *   **Ação:** Modificar o roteador (`public/admin/index.php`) para "envolver" todas as páginas do admin com o novo layout de cabeçalho e rodapé, centralizando a estrutura.
+    *   **Status:** [Pendente]
+
+### 2. Otimização de Performance (Lentidão no Carregamento)
+
+*   **Etapa 2.1: Criar uma Classe de Cache**
+    *   **Ação:** Desenvolver uma classe PHP (`src/lib/Cache.php`) para gerenciar o salvamento e a leitura de dados em arquivos de cache com tempo de expiração.
+    *   **Status:** [Pendente]
+
+*   **Etapa 2.2: Integrar o Cache na Página Inicial**
+    *   **Ação:** Utilizar a classe de cache na `public/index.php` para armazenar temporariamente os dados de banners e empresas, evitando consultas repetitivas ao banco.
+    *   **Status:** [Pendente]
+
+### 3. Conteúdo Dinâmico na Página Inicial
+
+*   **Etapa 3.1: Conectar a Home ao Banco de Dados**
+    *   **Ação:** Adicionar a lógica em `public/index.php` para buscar os banners e empresas do banco de dados (usando o cache da Melhoria 2).
+    *   **Status:** [Pendente]
+
+*   **Etapa 3.2: Dinamizar o "Hero" com um Carrossel de Banners**
+    *   **Ação:** Substituir o HTML estático por um Carrossel do Bootstrap que exibe os banners cadastrados.
+    *   **Status:** [Pendente]
+
+*   **Etapa 3.3: Dinamizar o Grid de Empresas**
+    *   **Ação:** Substituir os cards estáticos por um loop que renderiza dinamicamente as empresas cadastradas.
+    *   **Status:** [Pendente]
+
+### 4. Link no Rodapé
+
+*   **Etapa 4.1: Transformar o Texto em Link**
+    *   **Ação:** No `templates/footer.php`, transformar o texto "kmkz.ai.br" em um link clicável que abre em uma nova aba.
+    *   **Status:** [Pendente]
