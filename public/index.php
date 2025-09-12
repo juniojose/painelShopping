@@ -1,41 +1,72 @@
-<?php require_once __DIR__ . '/../templates/header.php'; ?>
+<?php 
+require_once __DIR__ . '/../templates/header.php'; 
+
+// Busca os dados do banco
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../src/models/Banner.php';
+require_once __DIR__ . '/../src/models/Company.php';
+
+$db = Database::getInstance();
+$bannerModel = new Banner($db);
+$companyModel = new Company($db);
+
+$banners = $bannerModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
+$companies = $companyModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 
 <div class="container" id="main-content">
     <!-- Seção do Banner Hero -->
+    <?php if (!empty($banners)): ?>
     <section class="my-4">
-        <div class="card text-bg-dark">
-            <img src="https://via.placeholder.com/1920x480.png?text=Banner+Promocional" class="card-img" alt="Banner">
-            <div class="card-img-overlay d-flex flex-column justify-content-center text-center">
-                <h1 class="card-title">Título do Banner</h1>
-                <p class="card-text">Subtítulo ou breve descrição da promoção.</p>
-                <div class="mt-3">
-                    <a href="https://www.google.com" class="btn btn-primary site-link">Visitar Agora</a>
-                </div>
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <?php foreach ($banners as $index => $banner): ?>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>" aria-current="true" aria-label="Slide <?= $index + 1 ?>"></button>
+                <?php endforeach; ?>
             </div>
+            <div class="carousel-inner">
+                <?php foreach ($banners as $index => $banner): ?>
+                    <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                        <img src="<?= htmlspecialchars($banner['url_imagem_banner']) ?>" class="d-block w-100" alt="<?= htmlspecialchars($banner['nome']) ?>">
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+                            <h5><?= htmlspecialchars($banner['nome']) ?></h5>
+                            <a href="<?= htmlspecialchars($banner['url_link']) ?>" class="btn btn-primary site-link">Visitar</a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- Seção do Grid de Empresas -->
     <section>
         <h2 class="mb-4">Nossas Lojas</h2>
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
-            <!-- Card de Exemplo 1 -->
-            <div class="col">
-                <div class="card h-100">
-                    <a href="https://www.google.com" class="site-link">
-                        <img src="https://via.placeholder.com/150x150.png?text=Logo+1" class="card-img-top" alt="Logo Empresa 1">
-                    </a>
+            <?php if (!empty($companies)): ?>
+                <?php foreach ($companies as $company): ?>
+                    <div class="col">
+                        <div class="card h-100">
+                            <a href="<?= htmlspecialchars($company['url_site']) ?>" class="site-link">
+                                <img src="<?= htmlspecialchars($company['url_logo']) ?>" class="card-img-top" alt="<?= htmlspecialchars($company['nome']) ?>">
+                            </a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="col-12">
+                    <p class="text-center">Nenhuma loja encontrada.</p>
                 </div>
-            </div>
-            <!-- Card de Exemplo 2 -->
-            <div class="col">
-                <div class="card h-100">
-                    <a href="https://www.bing.com" class="site-link">
-                        <img src="https://via.placeholder.com/150x150.png?text=Logo+2" class="card-img-top" alt="Logo Empresa 2">
-                    </a>
-                </div>
-            </div>
-            <!-- Adicionar mais cards conforme necessário -->
+            <?php endif; ?>
         </div>
     </section>
 </div>

@@ -112,7 +112,7 @@ Este plano descreve os passos para a criação da aplicação "Painel Shopping",
 4.  **Atualizar o `README.md`:** [Concluído]
     *   Adicionar instruções detalhadas de como instalar e configurar a aplicação em um ambiente de produção.
 
-## Fase 6: Melhorias e Otimizações [Em Andamento]
+## Fase 6: Melhorias e Otimizações [Concluído]
 
 Esta fase foca em melhorar a usabilidade, performance e funcionalidade da aplicação com base no feedback do usuário.
 
@@ -143,19 +143,19 @@ Esta fase foca em melhorar a usabilidade, performance e funcionalidade da aplica
 ### 3. Conteúdo Dinâmico na Página Inicial
 
 *   **Etapa 3.1: Conectar a Home ao Banco de Dados**
-    *   **Ação:** Adicionar a lógica em `public/index.php` para buscar os banners e empresas do banco de dados (usando o cache da Melhoria 2).
-    *   **Status:** [Pendente]
+    *   **Ação:** Adicionar a lógica em `public/index.php` para buscar os banners e empresas do banco de dados.
+    *   **Status:** [Concluído]
 
 *   **Etapa 3.2: Dinamizar o "Hero" com um Carrossel de Banners**
     *   **Ação:** Substituir o HTML estático por um Carrossel do Bootstrap que exibe os banners cadastrados.
-    *   **Status:** [Pendente]
+    *   **Status:** [Concluído]
 
 *   **Etapa 3.3: Dinamizar o Grid de Empresas**
     *   **Ação:** Substituir os cards estáticos por um loop que renderiza dinamicamente as empresas cadastradas.
-    *   **Status:** [Pendente]
+    *   **Status:** [Concluído]
 
 ### 4. Link no Rodapé
 
 *   **Etapa 4.1: Transformar o Texto em Link**
     *   **Ação:** No `templates/footer.php`, transformar o texto "kmkz.ai.br" em um link clicável que abre em uma nova aba.
-    *   **Status:** [Pendente]
+    *   **Status:** [Concluído]

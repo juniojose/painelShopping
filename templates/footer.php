@@ -3,7 +3,7 @@
 <footer style="background-color: <?= htmlspecialchars(THEME_CONFIG['footer_cor_fundo']); ?>; color: <?= htmlspecialchars(THEME_CONFIG['footer_cor_letra']); ?>;">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-3">
-            <small>Plataforma feita por kmkz.ai.br - todos os direitos reservados</small>
+            <small>Plataforma feita por <a href="https://kmkz.ai.br" target="_blank" rel="noopener noreferrer" style="color: inherit;">kmkz.ai.br</a> - todos os direitos reservados</small>
             <a href="<?= BASE_URL ?>/admin" style="color: inherit;">Painel Admin</a>
         </div>
     </div>
