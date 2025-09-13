@@ -32,7 +32,7 @@ class Setting {
      * @return bool True em caso de sucesso, false em caso de falha.
      */
     public function updateSetting($key, $value) {
-        $query = 'INSERT INTO ' . $this->table . ' (setting_key, setting_value) VALUES (:key, :value) ON DUPLICATE KEY UPDATE setting_value = :value';
+        $query = 'INSERT INTO ' . $this->table . ' (setting_key, setting_value) VALUES (:key, :value1) ON DUPLICATE KEY UPDATE setting_value = :value2';
         $stmt = $this->conn->prepare($query);
 
         $key = htmlspecialchars(strip_tags($key));
@@ -40,7 +40,8 @@ class Setting {
         $value = htmlspecialchars($value);
 
         $stmt->bindParam(':key', $key);
-        $stmt->bindParam(':value', $value);
+        $stmt->bindParam(':value1', $value);
+        $stmt->bindParam(':value2', $value);
 
         if ($stmt->execute()) {
             return true;
