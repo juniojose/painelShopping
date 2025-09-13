@@ -38,7 +38,8 @@ if ($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         'header_cor_letra', 
         'footer_cor_fundo', 
         'footer_cor_letra',
-        'companies_per_page'
+        'companies_per_page',
+        'companies_columns'
     ];
 
     foreach ($allowed_keys as $key) {
@@ -46,7 +47,7 @@ if ($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $value = $_POST[$key];
             
             // Add specific validation
-            if ($key === 'companies_per_page') {
+            if ($key === 'companies_per_page' || $key === 'companies_columns') {
                 if (!is_numeric($value) || $value < 1) {
                     continue; // Skip invalid number
                 }

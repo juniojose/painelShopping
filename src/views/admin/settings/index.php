@@ -80,6 +80,12 @@ $pageTitle = 'Configurações do Tema';
                             <small class="form-text text-muted">Quantidade de lojas exibidas na página inicial antes da paginação aparecer.</small>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="companies_columns" class="form-label">Colunas da Vitrine</label>
+                            <input type="number" class="form-control" id="companies_columns" name="companies_columns" value="<?= htmlspecialchars($settings['companies_columns'] ?? '3') ?>" min="1" max="6" required>
+                            <small class="form-text text-muted">Número de lojas por linha em telas grandes (1 a 6).</small>
+                        </div>
+
                         <div class="d-flex justify-content-end mt-4">
                             <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         </div>
