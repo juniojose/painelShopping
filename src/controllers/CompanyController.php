@@ -19,6 +19,15 @@ function handle_logo_upload($file, $current_logo = null) {
     $basePath = realpath(__DIR__ . '/../../');
     $upload_dir = $basePath . '/public/uploads/logos/';
 
+    // Garante que o diretório de upload exista. Tenta criá-lo se não existir.
+    if (!is_dir($upload_dir)) {
+        if (!mkdir($upload_dir, 0775, true)) {
+            // Se a criação do diretório falhar, retorna null para indicar o erro.
+            error_log("Falha ao criar o diretório de upload: " . $upload_dir);
+            return null;
+        }
+    }
+
     // Se nenhum arquivo novo for enviado, retorna o logo atual
     if (!isset($file) || $file['error'] === UPLOAD_ERR_NO_FILE) {
         return $current_logo;
@@ -26,7 +35,7 @@ function handle_logo_upload($file, $current_logo = null) {
 
     // Verifica outros erros de upload
     if ($file['error'] !== UPLOAD_ERR_OK) {
-        // Idealmente, logar o erro $file['error']
+        error_log("Erro de upload de arquivo: " . $file['error']);
         return null; // Indica falha no upload
     }
 
@@ -49,6 +58,7 @@ function handle_logo_upload($file, $current_logo = null) {
         }
     }
 
+    error_log("Falha ao mover o arquivo ou tipo de arquivo inválido.");
     return null; // Retorna null se o tipo de arquivo for inválido ou se move_uploaded_file falhar
 }
 
@@ -65,8 +75,8 @@ switch ($action) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $logo_path = handle_logo_upload($_FILES['logo'] ?? null);
 
-            if ($logo_path === null) {
-                $_SESSION['message'] = 'Erro: O upload de uma imagem de logo válida é obrigatório.';
+            if ($logo_path === null && (!isset($_FILES['logo']) || $_FILES['logo']['error'] !== UPLOAD_ERR_NO_FILE)) {
+                $_SESSION['message'] = 'Erro: O upload de uma imagem de logo válida é obrigatório e falhou.';
                 redirect('?page=empresas-form');
                 break;
             }
@@ -87,8 +97,8 @@ switch ($action) {
             $current_logo = $_POST['current_logo'] ?? null;
             $logo_path = handle_logo_upload($_FILES['logo'] ?? null, $current_logo);
             
-            if ($logo_path === null) {
-                $_SESSION['message'] = 'Erro: O arquivo de logo enviado não é válido.';
+            if ($logo_path === null && (!isset($_FILES['logo']) || $_FILES['logo']['error'] !== UPLOAD_ERR_NO_FILE)) {
+                $_SESSION['message'] = 'Erro: O arquivo de logo enviado não é válido ou falhou ao salvar.';
                 redirect('?page=empresas-form&id=' . $_POST['id']);
                 break;
             }
