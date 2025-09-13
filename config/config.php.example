@@ -20,11 +20,4 @@ define('DB_USER', '');
 define('DB_PASS', '');
 define('DB_NAME', 'painel_shopping');
 
-// Configurações do Tema
-define('THEME_CONFIG', [
-    'header_logo_url'   => 'https://via.placeholder.com/150x50.png?text=Sua+Logo',
-    'header_cor_fundo'  => '#FFFFFF',
-    'header_cor_letra'  => '#000000',
-    'footer_cor_fundo'  => '#F8F9FA',
-    'footer_cor_letra'  => '#6C757D',
-]);
+

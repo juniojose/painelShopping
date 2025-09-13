@@ -1,8 +1,13 @@
 <?php
-
-
-// Inclui o arquivo de configuração
+// Inclui o arquivo de configuração base
 require_once __DIR__ . '/../config/config.php';
+
+// Carrega as configurações do tema do banco de dados
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../src/models/Setting.php';
+$db = Database::getInstance();
+$settingModel = new Setting($db);
+$themeSettings = $settingModel->getAllSettings();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -31,11 +36,11 @@ require_once __DIR__ . '/../config/config.php';
 </head>
 <body>
 
-<header style="background-color: <?= htmlspecialchars(THEME_CONFIG['header_cor_fundo']); ?>; color: <?= htmlspecialchars(THEME_CONFIG['header_cor_letra']); ?>;">
+<header style="background-color: <?= htmlspecialchars($themeSettings['header_cor_fundo']); ?>; color: <?= htmlspecialchars($themeSettings['header_cor_letra']); ?>;">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-3">
             <a href="<?= BASE_URL ?>" id="home-logo-link" class="d-flex align-items-center text-decoration-none" style="color: inherit;">
-                <img src="<?= htmlspecialchars(THEME_CONFIG['header_logo_url']); ?>" alt="Logo" height="50">
+                <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($themeSettings['header_logo_url'], '/')) ?>" alt="Logo" height="50">
             </a>
             <a href="https://wa.me/556198343743" target="_blank" class="btn btn-success">
                 <i class="bi bi-whatsapp"></i> Contato

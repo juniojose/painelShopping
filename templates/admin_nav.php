@@ -22,6 +22,9 @@ $currentPage = $_GET['page'] ?? 'dashboard';
                 <li class="nav-item">
                     <a class="nav-link <?= (str_starts_with($currentPage, 'usuarios')) ? 'active' : '' ?>" href="?page=usuarios">Usuários</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= (str_starts_with($currentPage, 'settings')) ? 'active' : '' ?>" href="?page=settings">Configurações</a>
+                </li>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">

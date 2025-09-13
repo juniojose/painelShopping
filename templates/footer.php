@@ -1,6 +1,6 @@
 </main>
 
-<footer style="background-color: <?= htmlspecialchars(THEME_CONFIG['footer_cor_fundo']); ?>; color: <?= htmlspecialchars(THEME_CONFIG['footer_cor_letra']); ?>;">
+<footer style="background-color: <?= htmlspecialchars($themeSettings['footer_cor_fundo']); ?>; color: <?= htmlspecialchars($themeSettings['footer_cor_letra']); ?>;">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-3">
             <small>Plataforma feita por <a href="https://kmkz.ia.br" target="_blank" rel="noopener noreferrer" style="color: inherit;">kmkz.ia.br</a> - todos os direitos reservados</small>
