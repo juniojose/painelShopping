@@ -70,7 +70,7 @@ $companies = $companyModel->findWithPagination($companiesPerPage, $offset)->fetc
     <!-- Seção do Grid de Empresas -->
     <section>
         <h2 class="mb-4">Nossas Lojas</h2>
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
+        <div class="row row-cols-2 row-cols-md-3 g-4">
             <?php if (!empty($companies)): ?>
                 <?php foreach ($companies as $company): ?>
                     <div class="col">
