@@ -27,22 +27,6 @@ require_once __DIR__ . '/../config/config.php';
         main {
             flex: 1;
         }
-        .iframe-container {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            padding-top: 56.25%; /* Proporção 16:9 */
-        }
-        .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
     </style>
 </head>
 <body>
@@ -67,4 +51,4 @@ if (isset($is_admin_area) && $is_admin_area) {
 }
 ?>
 
-<main>
+<main class="d-flex flex-column">
