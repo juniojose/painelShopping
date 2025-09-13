@@ -8,59 +8,7 @@ require_once $basePath . '/config/database.php';
 require_once $basePath . '/src/models/Company.php';
 require_once $basePath . '/src/lib/helpers.php';
 
-/**
- * Gerencia o upload de um arquivo de logo.
- *
- * @param array|null $file O arquivo de $_FILES.
- * @param string|null $current_logo O caminho do logo atual (para substituição).
- * @return string|null O novo caminho do arquivo ou o caminho do logo atual se nenhum novo arquivo for enviado.
- */
-function handle_logo_upload($file, $current_logo = null) {
-    $basePath = realpath(__DIR__ . '/../../');
-    $upload_dir = $basePath . '/public/uploads/logos/';
-
-    // Garante que o diretório de upload exista. Tenta criá-lo se não existir.
-    if (!is_dir($upload_dir)) {
-        if (!mkdir($upload_dir, 0775, true)) {
-            // Se a criação do diretório falhar, retorna null para indicar o erro.
-            error_log("Falha ao criar o diretório de upload: " . $upload_dir);
-            return null;
-        }
-    }
-
-    // Se nenhum arquivo novo for enviado, retorna o logo atual
-    if (!isset($file) || $file['error'] === UPLOAD_ERR_NO_FILE) {
-        return $current_logo;
-    }
-
-    // Verifica outros erros de upload
-    if ($file['error'] !== UPLOAD_ERR_OK) {
-        error_log("Erro de upload de arquivo: " . $file['error']);
-        return null; // Indica falha no upload
-    }
-
-    $file_tmp_path = $file['tmp_name'];
-    $file_name = basename($file['name']);
-    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-    $allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
-
-    if (in_array($file_ext, $allowed_ext)) {
-        $new_file_name = uniqid('', true) . '.' . $file_ext;
-        $destination = $upload_dir . $new_file_name;
-
-        if (move_uploaded_file($file_tmp_path, $destination)) {
-            // Remove o logo antigo se um novo foi enviado com sucesso
-            if ($current_logo && file_exists($basePath . '/public' . $current_logo)) {
-                unlink($basePath . '/public' . $current_logo);
-            }
-            // Retorna o caminho relativo para salvar no banco
-            return '/uploads/logos/' . $new_file_name;
-        }
-    }
-
-    error_log("Falha ao mover o arquivo ou tipo de arquivo inválido.");
-    return null; // Retorna null se o tipo de arquivo for inválido ou se move_uploaded_file falhar
-}
+// A função de upload foi movida para helpers.php
 
 // Inicialização
 $db = Database::getInstance();
@@ -73,7 +21,7 @@ $action = $_GET['action'] ?? '';
 switch ($action) {
     case 'create':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $logo_path = handle_logo_upload($_FILES['logo'] ?? null);
+            $logo_path = handle_file_upload($_FILES['logo'] ?? null, 'logos');
 
             if ($logo_path === null && (!isset($_FILES['logo']) || $_FILES['logo']['error'] !== UPLOAD_ERR_NO_FILE)) {
                 $_SESSION['message'] = 'Erro: O upload de uma imagem de logo válida é obrigatório e falhou.';
@@ -95,7 +43,7 @@ switch ($action) {
     case 'update':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $current_logo = $_POST['current_logo'] ?? null;
-            $logo_path = handle_logo_upload($_FILES['logo'] ?? null, $current_logo);
+            $logo_path = handle_file_upload($_FILES['logo'] ?? null, 'logos', $current_logo);
             
             if ($logo_path === null && (!isset($_FILES['logo']) || $_FILES['logo']['error'] !== UPLOAD_ERR_NO_FILE)) {
                 $_SESSION['message'] = 'Erro: O arquivo de logo enviado não é válido ou falhou ao salvar.';

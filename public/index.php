@@ -28,7 +28,7 @@ $companies = $companyModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
             <div class="carousel-inner">
                 <?php foreach ($banners as $index => $banner): ?>
                     <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                        <img src="<?= htmlspecialchars($banner['url_imagem_banner']) ?>" class="d-block w-100" alt="<?= htmlspecialchars($banner['nome']) ?>">
+                        <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($banner['url_imagem_banner'], '/')) ?>" class="d-block w-100" alt="<?= htmlspecialchars($banner['nome']) ?>">
                         <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                             <h5><?= htmlspecialchars($banner['nome']) ?></h5>
                             <a href="<?= htmlspecialchars($banner['url_link']) ?>" class="btn btn-primary site-link">Visitar</a>
