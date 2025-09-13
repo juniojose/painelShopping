@@ -82,33 +82,45 @@ document.addEventListener('DOMContentLoaded', function () {
     const iframeContainer = document.getElementById('iframe-container');
     const siteIframe = document.getElementById('site-iframe');
     const siteLinks = document.querySelectorAll('.site-link');
+    const pageHeader = document.querySelector('header');
+    const pageFooter = document.querySelector('footer');
+
+    function showIframe(url) {
+        // Define a URL do iframe
+        siteIframe.src = url;
+
+        // Calcula a altura disponível
+        const headerHeight = pageHeader.offsetHeight;
+        const footerHeight = pageFooter.offsetHeight;
+        const availableHeight = window.innerHeight - headerHeight - footerHeight;
+
+        // Define a altura do container do iframe e o exibe
+        iframeContainer.style.height = availableHeight + 'px';
+        mainContent.style.display = 'none';
+        iframeContainer.style.display = 'block';
+    }
+
+    function showMainContent() {
+        mainContent.style.display = 'block';
+        iframeContainer.style.display = 'none';
+        siteIframe.src = 'about:blank';
+    }
 
     siteLinks.forEach(link => {
         link.addEventListener('click', function (event) {
-            event.preventDefault(); // Impede a navegação padrão
+            event.preventDefault();
             const url = this.getAttribute('href');
-            
             if (url && url !== '#') {
-                // Define a URL do iframe
-                siteIframe.src = url;
-
-                // Oculta o conteúdo principal e mostra o iframe
-                mainContent.style.display = 'none';
-                iframeContainer.style.display = 'block';
+                showIframe(url);
             }
         });
     });
 
-    // Opcional: Lógica para voltar à página inicial (ex: clicando no logo)
     const homeLink = document.getElementById('home-logo-link');
-    if(homeLink) {
+    if (homeLink) {
         homeLink.addEventListener('click', function(event) {
             event.preventDefault();
-            // Mostra o conteúdo principal e oculta o iframe
-            mainContent.style.display = 'block';
-            iframeContainer.style.display = 'none';
-            // Limpa o iframe
-            siteIframe.src = 'about:blank';
+            showMainContent();
         });
     }
 });

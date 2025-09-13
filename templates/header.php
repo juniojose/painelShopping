@@ -51,4 +51,4 @@ if (isset($is_admin_area) && $is_admin_area) {
 }
 ?>
 
-<main class="d-flex flex-column">
+<main>
