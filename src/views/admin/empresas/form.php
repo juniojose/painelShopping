@@ -58,7 +58,7 @@ if (isset($_GET['id'])) {
                             <?php if ($action === 'update' && !empty($company->url_logo)): ?>
                                 <div class="mt-2">
                                     <small>Logo Atual:</small>
-                                    <img src="<?= htmlspecialchars($company->url_logo) ?>" alt="Logo" width="100">
+                                    <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($company->url_logo, '/')) ?>" alt="Logo" width="100">
                                     <input type="hidden" name="current_logo" value="<?= htmlspecialchars($company->url_logo) ?>">
                                 </div>
                             <?php endif; ?>
