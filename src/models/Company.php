@@ -121,4 +121,37 @@ class Company {
         printf("Error: %s.\n", $stmt->error);
         return false;
     }
+
+    /**
+     * Conta o número total de empresas.
+     * @return int O número total de empresas.
+     */
+    public function countAll() {
+        $query = 'SELECT COUNT(id) as total FROM ' . $this->table;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int)($row['total'] ?? 0);
+    }
+
+    /**
+     * Busca empresas com paginação.
+     * @param int $limit O número de registros a retornar.
+     * @param int $offset O deslocamento inicial.
+     * @return PDOStatement O statement com o resultado.
+     */
+    public function findWithPagination($limit, $offset) {
+        $query = 'SELECT id, nome, url_site, url_logo, created_at FROM ' . 
+                 $this->table . 
+                 ' ORDER BY nome ASC LIMIT :limit OFFSET :offset';
+        
+        $stmt = $this->conn->prepare($query);
+
+        // Bind parameters
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt;
+    }
 }

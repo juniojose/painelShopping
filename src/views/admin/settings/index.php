@@ -75,6 +75,15 @@ $pageTitle = 'Configurações do Tema';
                             <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         </div>
                     </form>
+
+                    <h5 class="mt-4">Vitrine</h5>
+                        <hr>
+
+                        <div class="mb-3">
+                            <label for="companies_per_page" class="form-label">Lojas por Página</label>
+                            <input type="number" class="form-control" id="companies_per_page" name="companies_per_page" value="<?= htmlspecialchars($settings['companies_per_page'] ?? '12') ?>" min="1" required>
+                            <small class="form-text text-muted">Quantidade de lojas exibidas na página inicial antes da paginação aparecer.</small>
+                        </div>
                 </div>
             </div>
         </div>

@@ -1,17 +1,38 @@
 <?php 
 require_once __DIR__ . '/../templates/header.php'; 
 
-// Busca os dados do banco
+// --- LÓGICA DE PAGINAÇÃO E BUSCA DE DADOS ---
+
+// Includes
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../src/models/Banner.php';
 require_once __DIR__ . '/../src/models/Company.php';
 
 $db = Database::getInstance();
+
+// Busca banners (sem paginação)
 $bannerModel = new Banner($db);
+$banners = $bannerModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
+
+// Lógica de paginação para empresas
 $companyModel = new Company($db);
 
-$banners = $bannerModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
-$companies = $companyModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
+// 1. Obter configurações
+$companiesPerPage = (int)($themeSettings['companies_per_page'] ?? 12);
+$totalCompanies = $companyModel->countAll();
+$totalPages = $companiesPerPage > 0 ? ceil($totalCompanies / $companiesPerPage) : 0;
+
+// 2. Obter página atual
+$currentPage = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
+if ($currentPage < 1) {
+    $currentPage = 1;
+} elseif ($currentPage > $totalPages && $totalPages > 0) {
+    $currentPage = $totalPages;
+}
+
+// 3. Calcular offset e buscar empresas
+$offset = ($currentPage - 1) * $companiesPerPage;
+$companies = $companyModel->findWithPagination($companiesPerPage, $offset)->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -48,6 +69,7 @@ $companies = $companyModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Seção do Grid de Empresas -->
     <section>
+        <h2 class="mb-4">Nossas Lojas</h2>
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
             <?php if (!empty($companies)): ?>
                 <?php foreach ($companies as $company): ?>
@@ -71,6 +93,26 @@ $companies = $companyModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
             <?php endif; ?>
         </div>
     </section>
+
+    <!-- Seção de Paginação -->
+    <?php if ($totalPages > 1): ?>
+    <nav aria-label="Navegação de página" class="mt-5 d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                <a class="page-link" href="?p=<?= $currentPage - 1 ?>">Anterior</a>
+            </li>
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
+                    <a class="page-link" href="?p=<?= $i ?>"><?= $i ?></a>
+                </li>
+            <?php endfor; ?>
+            <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                <a class="page-link" href="?p=<?= $currentPage + 1 ?>">Próximo</a>
+            </li>
+        </ul>
+    </nav>
+    <?php endif; ?>
+
 </div>
 
 <!-- Container do Iframe (inicialmente oculto) -->

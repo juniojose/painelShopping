@@ -32,14 +32,30 @@ if ($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
          $settingModel->updateSetting('header_logo_url', $new_logo_path);
     }
 
-    // 2. Handle Color Settings
-    $allowed_color_keys = ['header_cor_fundo', 'header_cor_letra', 'footer_cor_fundo', 'footer_cor_letra'];
-    foreach ($allowed_color_keys as $key) {
+    // 2. Handle other settings
+    $allowed_keys = [
+        'header_cor_fundo', 
+        'header_cor_letra', 
+        'footer_cor_fundo', 
+        'footer_cor_letra',
+        'companies_per_page'
+    ];
+
+    foreach ($allowed_keys as $key) {
         if (isset($_POST[$key])) {
-            // Basic validation for color format
-            if (preg_match('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/', $_POST[$key])) {
-                $settingModel->updateSetting($key, $_POST[$key]);
+            $value = $_POST[$key];
+            
+            // Add specific validation
+            if ($key === 'companies_per_page') {
+                if (!is_numeric($value) || $value < 1) {
+                    continue; // Skip invalid number
+                }
+            } else { // It's a color
+                if (!preg_match('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/', $value)) {
+                    continue; // Skip invalid color
+                }
             }
+            $settingModel->updateSetting($key, $value);
         }
     }
 
