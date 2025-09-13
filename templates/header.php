@@ -1,4 +1,9 @@
 <?php
+// Garante que a sessão seja iniciada em todas as páginas, antes de qualquer output.
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Inclui o arquivo de configuração base
 require_once __DIR__ . '/../config/config.php';
 
@@ -50,11 +55,6 @@ $themeSettings = $settingModel->getAllSettings();
 </header>
 
 <?php
-// Garante que a sessão seja iniciada para que a verificação de login funcione
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 // Se estiver na área administrativa E o usuário estiver logado, carrega o menu de navegação do admin
 if (isset($is_admin_area) && $is_admin_area && isset($_SESSION['user_id'])) {
     require_once __DIR__ . '/admin_nav.php';
