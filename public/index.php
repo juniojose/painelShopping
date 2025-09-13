@@ -56,8 +56,11 @@ $companies = $companyModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($companies as $company): ?>
                     <div class="col">
                         <div class="card h-100">
-                            <a href="<?= htmlspecialchars($company['url_site']) ?>" class="site-link">
-                                <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($company['url_logo'], '/')) ?>" class="card-img-top" alt="<?= htmlspecialchars($company['nome']) ?>">
+                            <a href="<?= htmlspecialchars($company['url_site']) ?>" class="site-link text-decoration-none text-body">
+                                <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($company['url_logo'], '/')) ?>" class="card-img-top p-2" alt="<?= htmlspecialchars($company['nome']) ?>" style="object-fit: contain; height: 100px;">
+                                <div class="card-body p-2">
+                                    <h6 class="card-title text-center small mb-0"><?= htmlspecialchars($company['nome']) ?></h6>
+                                </div>
                             </a>
                         </div>
                     </div>
