@@ -50,8 +50,13 @@ $themeSettings = $settingModel->getAllSettings();
 </header>
 
 <?php
-// Se estiver na área administrativa, carrega o menu de navegação do admin
-if (isset($is_admin_area) && $is_admin_area) {
+// Garante que a sessão seja iniciada para que a verificação de login funcione
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Se estiver na área administrativa E o usuário estiver logado, carrega o menu de navegação do admin
+if (isset($is_admin_area) && $is_admin_area && isset($_SESSION['user_id'])) {
     require_once __DIR__ . '/admin_nav.php';
 }
 ?>
