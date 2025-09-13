@@ -57,7 +57,7 @@ $companies = $companyModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
                     <div class="col">
                         <div class="card h-100">
                             <a href="<?= htmlspecialchars($company['url_site']) ?>" class="site-link">
-                                <img src="<?= htmlspecialchars(BASE_URL . '/' . ltrim($empresa['url_logo'], '/')) ?>" class="card-img-top" alt="<?= htmlspecialchars($empresa['nome']) ?>">
+                                <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($company['url_logo'], '/')) ?>" class="card-img-top" alt="<?= htmlspecialchars($company['nome']) ?>">
                             </a>
                         </div>
                     </div>
