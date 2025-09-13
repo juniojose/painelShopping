@@ -24,6 +24,7 @@ if (isset($_GET['controller'])) {
         'company' => $basePath . '/src/controllers/CompanyController.php',
         'banner' => $basePath . '/src/controllers/BannerController.php',
         'auth' => $basePath . '/src/controllers/AuthController.php',
+        'settings' => $basePath . '/src/controllers/SettingsController.php',
     ];
 
     if (array_key_exists($controller, $controllerMap)) {
@@ -56,6 +57,7 @@ if (!isset($_SESSION['user_id'])) {
         'banners-form' => $basePath . '/src/views/admin/banners/form.php',
         'usuarios' => $basePath . '/src/views/admin/usuarios/index.php',
         'usuarios-form' => $basePath . '/src/views/admin/usuarios/form.php',
+        'settings' => $basePath . '/src/views/admin/settings/index.php',
     ];
 
     if (array_key_exists($page, $allowedPages)) {
