@@ -191,8 +191,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const homeLink = document.getElementById('home-logo-link');
     if (homeLink) {
         homeLink.addEventListener('click', function(event) {
-            event.preventDefault();
-            showMainContent();
+            event.preventDefault(); // Previne o comportamento padrão para garantir o redirecionamento
+            window.location.href = this.getAttribute('href'); // Redireciona para a URL base, limpando os filtros
         });
     }
 });

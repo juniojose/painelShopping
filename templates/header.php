@@ -51,7 +51,7 @@ $themeSettings = $settingModel->getAllSettings();
                 <!-- Formulário de Busca -->
                 <form action="<?= BASE_URL ?>" method="GET" class="d-flex me-3" role="search">
                     <input class="form-control me-2" type="search" name="search" placeholder="Buscar empresa..." aria-label="Buscar">
-                    <button class="btn btn-outline-light" type="submit">Buscar</button>
+                    <button class="btn btn-primary" type="submit">Buscar</button>
                 </form>
                 <a href="https://wa.me/556198343743" target="_blank" class="btn btn-success">
                     <i class="bi bi-whatsapp"></i> Contato
