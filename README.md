@@ -25,6 +25,7 @@ A aplicação conta com uma área administrativa protegida por login, onde é po
     *   Gerenciamento completo (CRUD) de Usuários.
     *   Gerenciamento completo (CRUD) de Empresas.
     *   Gerenciamento completo (CRUD) de Banners.
+    *   Painel de configurações para alterar a logo e as cores do tema.
 
 ---
 

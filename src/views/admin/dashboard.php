@@ -10,9 +10,8 @@ require_auth();
 ?>
 
 <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="mb-4">
         <h2>Dashboard</h2>
-        <a href="?controller=auth&action=logout" class="btn btn-danger">Sair</a>
     </div>
 
     <div class="alert alert-success">

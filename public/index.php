@@ -1,26 +1,54 @@
 <?php 
 require_once __DIR__ . '/../templates/header.php'; 
 
-// Busca os dados do banco
+// --- LÓGICA DE PAGINAÇÃO E BUSCA DE DADOS ---
+
+// Includes
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../src/models/Banner.php';
 require_once __DIR__ . '/../src/models/Company.php';
 
 $db = Database::getInstance();
-$bannerModel = new Banner($db);
-$companyModel = new Company($db);
 
+// Busca banners (sem paginação)
+$bannerModel = new Banner($db);
 $banners = $bannerModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
 
-// Verifica se há um termo de busca para as empresas
-$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
+// Lógica de busca e paginação para empresas
+$companyModel = new Company($db);
 
+// 1. Obter termo de busca e configurações
+$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
+$companiesPerPage = (int)($themeSettings['companies_per_page'] ?? 12);
+
+// 2. Obter total de itens e calcular total de páginas (com base na busca, se houver)
 if (!empty($searchTerm)) {
-    // Se houver busca, filtra as empresas
-    $companies = $companyModel->searchByName($searchTerm)->fetchAll(PDO::FETCH_ASSOC);
+    $totalCompanies = $companyModel->countAllBySearch($searchTerm);
 } else {
-    // Caso contrário, busca todas as empresas
-    $companies = $companyModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
+    $totalCompanies = $companyModel->countAll();
+}
+$totalPages = $companiesPerPage > 0 ? ceil($totalCompanies / $companiesPerPage) : 0;
+
+// 3. Obter página atual
+$currentPage = isset($_GET['p']) && is_numeric($_GET['p']) ? (int)$_GET['p'] : 1;
+if ($currentPage < 1) {
+    $currentPage = 1;
+} elseif ($currentPage > $totalPages && $totalPages > 0) {
+    $currentPage = $totalPages;
+}
+
+// 4. Calcular offset e buscar empresas (com base na busca, se houver)
+$offset = ($currentPage - 1) * $companiesPerPage;
+if (!empty($searchTerm)) {
+    $companies = $companyModel->findWithPaginationAndSearch($searchTerm, $companiesPerPage, $offset)->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $companies = $companyModel->findWithPagination($companiesPerPage, $offset)->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// 5. Montar query string para links de paginação
+$paginationQueryString = '';
+if (!empty($searchTerm)) {
+    $paginationQueryString .= '&search=' . urlencode($searchTerm);
 }
 
 ?>
@@ -38,11 +66,9 @@ if (!empty($searchTerm)) {
             <div class="carousel-inner">
                 <?php foreach ($banners as $index => $banner): ?>
                     <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                        <img src="<?= htmlspecialchars($banner['url_imagem_banner']) ?>" class="d-block w-100" alt="<?= htmlspecialchars($banner['nome']) ?>">
-                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
-                            <h5><?= htmlspecialchars($banner['nome']) ?></h5>
-                            <a href="<?= htmlspecialchars($banner['url_link']) ?>" class="btn btn-primary site-link">Visitar</a>
-                        </div>
+                        <a href="<?= htmlspecialchars($banner['url_link']) ?>" class="site-link">
+                            <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($banner['url_imagem_banner'], '/')) ?>" class="d-block w-100" alt="<?= htmlspecialchars($banner['nome']) ?>">
+                        </a>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -60,14 +86,30 @@ if (!empty($searchTerm)) {
 
     <!-- Seção do Grid de Empresas -->
     <section>
-        <h2 class="mb-4">Nossas Lojas</h2>
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4">
+        <?php if (empty($searchTerm)): // Mostra o título apenas se não for uma busca ?>
+            <h2 class="mb-4">Nossas Lojas</h2>
+        <?php else: ?>
+            <h2 class="mb-4">Resultado da busca por: "<?= htmlspecialchars($searchTerm) ?>"</h2>
+        <?php endif; ?>
+
+        <?php
+            $columns = $themeSettings['companies_columns'] ?? 3;
+            // Garante que o valor seja um número entre 1 e 6 para segurança e para não quebrar o grid
+            $columns = max(1, min(6, (int)$columns)); 
+            $gridClass = "row row-cols-2 row-cols-md-" . $columns . " g-4";
+        ?>
+        <div class="<?= $gridClass ?>">
             <?php if (!empty($companies)): ?>
                 <?php foreach ($companies as $company): ?>
                     <div class="col">
                         <div class="card h-100">
-                            <a href="<?= htmlspecialchars($company['url_site']) ?>" class="site-link">
-                                <img src="<?= htmlspecialchars($company['url_logo']) ?>" class="card-img-top" alt="<?= htmlspecialchars($company['nome']) ?>">
+                            <a href="<?= htmlspecialchars($company['url_site']) ?>" class="site-link text-decoration-none text-body d-block p-2">
+                                <div style="aspect-ratio: 1 / 1; width: 100%;">
+                                    <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($company['url_logo'], '/')) ?>" alt="<?= htmlspecialchars($company['nome']) ?>" style="width: 100%; height: 100%; object-fit: contain;">
+                                </div>
+                                <div class="card-body p-2">
+                                    <h6 class="card-title text-center small mb-0"><?= htmlspecialchars($company['nome']) ?></h6>
+                                </div>
                             </a>
                         </div>
                     </div>
@@ -79,6 +121,26 @@ if (!empty($searchTerm)) {
             <?php endif; ?>
         </div>
     </section>
+
+    <!-- Seção de Paginação -->
+    <?php if ($totalPages > 1): ?>
+    <nav aria-label="Navegação de página" class="mt-5 d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                <a class="page-link" href="?p=<?= $currentPage - 1 ?><?= $paginationQueryString ?>">Anterior</a>
+            </li>
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
+                    <a class="page-link" href="?p=<?= $i ?><?= $paginationQueryString ?>"><?= $i ?></a>
+                </li>
+            <?php endfor; ?>
+            <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                <a class="page-link" href="?p=<?= $currentPage + 1 ?><?= $paginationQueryString ?>">Próximo</a>
+            </li>
+        </ul>
+    </nav>
+    <?php endif; ?>
+
 </div>
 
 <!-- Container do Iframe (inicialmente oculto) -->
@@ -92,33 +154,45 @@ document.addEventListener('DOMContentLoaded', function () {
     const iframeContainer = document.getElementById('iframe-container');
     const siteIframe = document.getElementById('site-iframe');
     const siteLinks = document.querySelectorAll('.site-link');
+    const pageHeader = document.querySelector('header');
+    const pageFooter = document.querySelector('footer');
+
+    function showIframe(url) {
+        // Define a URL do iframe
+        siteIframe.src = url;
+
+        // Calcula a altura disponível
+        const headerHeight = pageHeader.offsetHeight;
+        const footerHeight = pageFooter.offsetHeight;
+        const availableHeight = window.innerHeight - headerHeight - footerHeight;
+
+        // Define a altura do container do iframe e o exibe
+        iframeContainer.style.height = availableHeight + 'px';
+        mainContent.style.display = 'none';
+        iframeContainer.style.display = 'block';
+    }
+
+    function showMainContent() {
+        mainContent.style.display = 'block';
+        iframeContainer.style.display = 'none';
+        siteIframe.src = 'about:blank';
+    }
 
     siteLinks.forEach(link => {
         link.addEventListener('click', function (event) {
-            event.preventDefault(); // Impede a navegação padrão
+            event.preventDefault();
             const url = this.getAttribute('href');
-            
             if (url && url !== '#') {
-                // Define a URL do iframe
-                siteIframe.src = url;
-
-                // Oculta o conteúdo principal e mostra o iframe
-                mainContent.style.display = 'none';
-                iframeContainer.style.display = 'block';
+                showIframe(url);
             }
         });
     });
 
-    // Opcional: Lógica para voltar à página inicial (ex: clicando no logo)
     const homeLink = document.getElementById('home-logo-link');
-    if(homeLink) {
+    if (homeLink) {
         homeLink.addEventListener('click', function(event) {
             event.preventDefault();
-            // Mostra o conteúdo principal e oculta o iframe
-            mainContent.style.display = 'block';
-            iframeContainer.style.display = 'none';
-            // Limpa o iframe
-            siteIframe.src = 'about:blank';
+            showMainContent();
         });
     }
 });

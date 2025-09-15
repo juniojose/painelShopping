@@ -10,9 +10,7 @@ $currentPage = $_GET['page'] ?? 'dashboard';
         </button>
         <div class="collapse navbar-collapse" id="adminNavbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link <?= ($currentPage === 'dashboard') ? 'active' : '' ?>" href="?page=dashboard">Dashboard</a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link <?= (str_starts_with($currentPage, 'empresas')) ? 'active' : '' ?>" href="?page=empresas">Empresas</a>
                 </li>
@@ -21,6 +19,9 @@ $currentPage = $_GET['page'] ?? 'dashboard';
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= (str_starts_with($currentPage, 'usuarios')) ? 'active' : '' ?>" href="?page=usuarios">Usuários</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= (str_starts_with($currentPage, 'settings')) ? 'active' : '' ?>" href="?page=settings">Configurações</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">

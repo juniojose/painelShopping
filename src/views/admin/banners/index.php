@@ -49,7 +49,7 @@ $num = $result->rowCount();
                         <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
                             <?php extract($row); ?>
                             <tr>
-                                <td><img src="<?= htmlspecialchars($url_imagem_banner) ?>" alt="Banner" style="width: 150px; height: auto;"></td>
+                                <td><img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($url_imagem_banner, '/')) ?>" alt="Banner" style="width: 150px; height: auto;"></td>
                                 <td><?= htmlspecialchars($nome) ?></td>
                                 <td>
                                     <a href="?page=banners-form&id=<?= $id ?>" class="btn btn-primary btn-sm">Editar</a>

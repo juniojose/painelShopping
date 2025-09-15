@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
                     <h3><?= $pageTitle ?></h3>
                 </div>
                 <div class="card-body">
-                    <form action="?controller=company&action=<?= $action ?>" method="POST">
+                    <form action="?controller=company&action=<?= $action ?>" method="POST" enctype="multipart/form-data">
                         <?php if ($action === 'update'): ?>
                             <input type="hidden" name="id" value="<?= htmlspecialchars($company->id) ?>">
                         <?php endif; ?>
@@ -53,8 +53,15 @@ if (isset($_GET['id'])) {
                         </div>
 
                         <div class="mb-3">
-                            <label for="url_logo" class="form-label">URL da Logo</label>
-                            <input type="url" class="form-control" id="url_logo" name="url_logo" value="<?= htmlspecialchars($company->url_logo ?? '') ?>" required>
+                            <label for="logo" class="form-label">Logo da Empresa</label>
+                            <input type="file" class="form-control" id="logo" name="logo">
+                            <?php if ($action === 'update' && !empty($company->url_logo)): ?>
+                                <div class="mt-2">
+                                    <small>Logo Atual:</small>
+                                    <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($company->url_logo, '/')) ?>" alt="Logo" width="100">
+                                    <input type="hidden" name="current_logo" value="<?= htmlspecialchars($company->url_logo) ?>">
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="d-flex justify-content-end">

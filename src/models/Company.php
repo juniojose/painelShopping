@@ -138,4 +138,73 @@ class Company {
         printf("Error: %s.\n", $stmt->error);
         return false;
     }
+
+    /**
+     * Conta o número total de empresas.
+     * @return int O número total de empresas.
+     */
+    public function countAll() {
+        $query = 'SELECT COUNT(id) as total FROM ' . $this->table;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int)($row['total'] ?? 0);
+    }
+
+    /**
+     * Conta o número total de empresas para um termo de busca.
+     * @param string $name O termo de busca.
+     * @return int O número de empresas encontradas.
+     */
+    public function countAllBySearch($name) {
+        $query = 'SELECT COUNT(id) as total FROM ' . $this->table . ' WHERE nome LIKE :nome';
+        $stmt = $this->conn->prepare($query);
+        $searchTerm = '%' . htmlspecialchars(strip_tags($name)) . '%';
+        $stmt->bindParam(':nome', $searchTerm);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int)($row['total'] ?? 0);
+    }
+
+    /**
+     * Busca empresas com paginação.
+     * @param int $limit O número de registros a retornar.
+     * @param int $offset O deslocamento inicial.
+     * @return PDOStatement O statement com o resultado.
+     */
+    public function findWithPagination($limit, $offset) {
+        $query = 'SELECT id, nome, url_site, url_logo, created_at FROM ' . 
+                 $this->table . 
+                 ' ORDER BY nome ASC LIMIT :limit OFFSET :offset';
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt;
+    }
+
+    /**
+     * Busca empresas por nome com paginação.
+     * @param string $name O termo de busca.
+     * @param int $limit O número de registros a retornar.
+     * @param int $offset O deslocamento inicial.
+     * @return PDOStatement O statement com o resultado.
+     */
+    public function findWithPaginationAndSearch($name, $limit, $offset) {
+        $query = 'SELECT id, nome, url_site, url_logo, created_at FROM ' . 
+                 $this->table . 
+                 ' WHERE nome LIKE :nome ORDER BY nome ASC LIMIT :limit OFFSET :offset';
+        
+        $stmt = $this->conn->prepare($query);
+
+        $searchTerm = '%' . htmlspecialchars(strip_tags($name)) . '%';
+        $stmt->bindParam(':nome', $searchTerm);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt;
+    }
 }

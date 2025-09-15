@@ -1,8 +1,18 @@
 <?php
+// Garante que a sessão seja iniciada em todas as páginas, antes de qualquer output.
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-
-// Inclui o arquivo de configuração
+// Inclui o arquivo de configuração base
 require_once __DIR__ . '/../config/config.php';
+
+// Carrega as configurações do tema do banco de dados
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../src/models/Setting.php';
+$db = Database::getInstance();
+$settingModel = new Setting($db);
+$themeSettings = $settingModel->getAllSettings();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -27,31 +37,15 @@ require_once __DIR__ . '/../config/config.php';
         main {
             flex: 1;
         }
-        .iframe-container {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            padding-top: 56.25%; /* Proporção 16:9 */
-        }
-        .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
     </style>
 </head>
 <body>
 
-<header style="background-color: <?= htmlspecialchars(THEME_CONFIG['header_cor_fundo']); ?>; color: <?= htmlspecialchars(THEME_CONFIG['header_cor_letra']); ?>;">
+<header style="background-color: <?= htmlspecialchars($themeSettings['header_cor_fundo']); ?>; color: <?= htmlspecialchars($themeSettings['header_cor_letra']); ?>;">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-3">
             <a href="<?= BASE_URL ?>" id="home-logo-link" class="d-flex align-items-center text-decoration-none" style="color: inherit;">
-                <img src="<?= htmlspecialchars(THEME_CONFIG['header_logo_url']); ?>" alt="Logo" height="50">
+                <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($themeSettings['header_logo_url'], '/')) ?>" alt="Logo" height="50">
             </a>
             <div class="d-flex align-items-center">
                 <!-- Formulário de Busca -->
@@ -68,8 +62,8 @@ require_once __DIR__ . '/../config/config.php';
 </header>
 
 <?php
-// Se estiver na área administrativa, carrega o menu de navegação do admin
-if (isset($is_admin_area) && $is_admin_area) {
+// Se estiver na área administrativa E o usuário estiver logado, carrega o menu de navegação do admin
+if (isset($is_admin_area) && $is_admin_area && isset($_SESSION['user_id'])) {
     require_once __DIR__ . '/admin_nav.php';
 }
 ?>

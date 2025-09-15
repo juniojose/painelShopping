@@ -36,7 +36,7 @@ if (isset($_GET['id'])) {
                     <h3><?= $pageTitle ?></h3>
                 </div>
                 <div class="card-body">
-                    <form action="?controller=banner&action=<?= $action ?>" method="POST">
+                    <form action="?controller=banner&action=<?= $action ?>" method="POST" enctype="multipart/form-data">
                         <?php if ($action === 'update'): ?>
                             <input type="hidden" name="id" value="<?= htmlspecialchars($banner->id) ?>">
                         <?php endif; ?>
@@ -52,8 +52,15 @@ if (isset($_GET['id'])) {
                         </div>
 
                         <div class="mb-3">
-                            <label for="url_imagem_banner" class="form-label">URL da Imagem do Banner</label>
-                            <input type="url" class="form-control" id="url_imagem_banner" name="url_imagem_banner" value="<?= htmlspecialchars($banner->url_imagem_banner ?? '') ?>" required>
+                            <label for="imagem" class="form-label">Imagem do Banner</label>
+                            <input type="file" class="form-control" id="imagem" name="imagem">
+                            <?php if ($action === 'update' && !empty($banner->url_imagem_banner)): ?>
+                                <div class="mt-2">
+                                    <small>Imagem Atual:</small>
+                                    <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($banner->url_imagem_banner, '/')) ?>" alt="Banner" class="img-fluid mt-2" style="max-height: 150px;">
+                                    <input type="hidden" name="current_image" value="<?= htmlspecialchars($banner->url_imagem_banner) ?>">
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="d-flex justify-content-end">
