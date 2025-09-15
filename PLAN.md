@@ -103,3 +103,37 @@ Esta fase adiciona um campo de busca na página inicial para filtrar empresas di
 *   **Etapa 1.3: Integrar a Busca na Página Inicial**
     *   **Ação:** Em `public/index.php`, verificar a existência de `$_GET['search']` e chamar o método de busca apropriado (`searchByName` ou `findAll`).
     *   **Status:** [Concluído]
+
+## Fase 9: Portal do Lojista [A Fazer]
+
+Esta fase introduz um sistema de autoatendimento para que usuários (lojistas) possam se registrar e gerenciar suas próprias empresas, que passarão por um fluxo de aprovação de um administrador.
+
+### Parte 1: Fundações no Banco de Dados e Estrutura [A Fazer]
+
+1.  **Alterar a Tabela `users`:** Adicionar a coluna `role` (`admin`, `lojista`).
+2.  **Alterar a Tabela `empresas`:** Adicionar colunas `user_id` (vínculo com o lojista) e `status` (ciclo de vida: `pendente`, `aprovado`, `reprovado`, `edicao_pendente`, `desativado`).
+3.  **Criar Tabela `company_edit_requests`:** Tabela dedicada para solicitações de edição, garantindo que os dados em produção não sejam alterados sem aprovação.
+4.  **Atualizar `database.sql`:** Refletir a nova estrutura do banco de dados no arquivo de schema.
+
+### Parte 2: Implementação do Cadastro de Lojistas [A Fazer]
+
+1.  **Criar Rota e Controller:** Implementar a lógica de registro em `src/controllers/RegisterController.php`.
+2.  **Criar a View de Cadastro:** Desenvolver o formulário em `src/views/public/register.php`.
+3.  **Integrar no Layout:** Adicionar um link "Cadastre sua Empresa" no site.
+
+### Parte 3: Dashboard do Lojista e Cadastro de Empresas [A Fazer]
+
+1.  **Ajustar Autenticação:** Redirecionar usuários `lojista` para um novo painel após o login.
+2.  **Criar o Dashboard do Lojista:** Uma view que lista todas as empresas de um lojista e permite o cadastro de novas.
+3.  **Implementar o Cadastro de Empresa:** Formulário para o lojista submeter uma nova empresa, que entra no sistema com status `pendente`.
+
+### Parte 4: Fluxo de Aprovação para Administradores [A Fazer]
+
+1.  **Configurar Envio de E-mail:** Integrar uma biblioteca (ex: PHPMailer) para notificar os administradores sobre novas submissões e edições pendentes.
+2.  **Modificar a Área do Administrador:** Adicionar filtros e seções para visualizar e gerenciar empresas por status (`Pendentes`, `Edição Pendente`, etc.).
+3.  **Ajustar a Exibição Pública:** Garantir que a página inicial exiba apenas empresas com status `aprovado`.
+
+### Parte 5: Gerenciamento da Empresa pelo Lojista [A Fazer]
+
+1.  **Desativação de Empresa (Soft Delete):** Permitir que o lojista desative sua empresa (alterando o status para `desativado`) sem excluir os dados.
+2.  **Solicitação de Edição com Opções:** Implementar o fluxo onde o lojista solicita uma edição e pode escolher se a versão atual da empresa continua online ou não durante o período de aprovação.
