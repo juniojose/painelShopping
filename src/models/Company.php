@@ -28,6 +28,23 @@ class Company {
     }
 
     /**
+     * Busca empresas por nome.
+     * @param string $name O termo para buscar no nome da empresa.
+     * @return PDOStatement O statement com o resultado.
+     */
+    public function searchByName($name) {
+        $query = 'SELECT id, nome, url_site, url_logo, created_at FROM ' . $this->table . ' WHERE nome LIKE :nome ORDER BY nome ASC';
+        $stmt = $this->conn->prepare($query);
+
+        // Limpa e associa o parâmetro de busca
+        $searchTerm = '%' . htmlspecialchars(strip_tags($name)) . '%';
+        $stmt->bindParam(':nome', $searchTerm);
+
+        $stmt->execute();
+        return $stmt;
+    }
+
+    /**
      * Busca uma única empresa pelo ID.
      * @return bool True se a empresa for encontrada e as propriedades preenchidas, false caso contrário.
      */

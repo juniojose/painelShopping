@@ -53,9 +53,16 @@ require_once __DIR__ . '/../config/config.php';
             <a href="<?= BASE_URL ?>" id="home-logo-link" class="d-flex align-items-center text-decoration-none" style="color: inherit;">
                 <img src="<?= htmlspecialchars(THEME_CONFIG['header_logo_url']); ?>" alt="Logo" height="50">
             </a>
-            <a href="https://wa.me/556198343743" target="_blank" class="btn btn-success">
-                <i class="bi bi-whatsapp"></i> Contato
-            </a>
+            <div class="d-flex align-items-center">
+                <!-- Formulário de Busca -->
+                <form action="<?= BASE_URL ?>" method="GET" class="d-flex me-3" role="search">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Buscar empresa..." aria-label="Buscar">
+                    <button class="btn btn-outline-light" type="submit">Buscar</button>
+                </form>
+                <a href="https://wa.me/556198343743" target="_blank" class="btn btn-success">
+                    <i class="bi bi-whatsapp"></i> Contato
+                </a>
+            </div>
         </div>
     </div>
 </header>

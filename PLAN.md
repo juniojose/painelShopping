@@ -160,7 +160,7 @@ Esta fase foca em melhorar a usabilidade, performance e funcionalidade da aplica
     *   **Ação:** No `templates/footer.php`, transformar o texto "kmkz.ai.br" em um link clicável que abre em uma nova aba.
     *   **Status:** [Concluído]
 
-## Fase 7: Funcionalidade de Busca [Pendente]
+## Fase 7: Funcionalidade de Busca [Concluído]
 
 Esta fase adiciona um campo de busca na página inicial para filtrar empresas dinamicamente.
 
@@ -168,12 +168,12 @@ Esta fase adiciona um campo de busca na página inicial para filtrar empresas di
 
 *   **Etapa 1.1: Adicionar Lógica de Busca no Model**
     *   **Ação:** Criar um novo método `searchByName(string $name)` em `src/models/Company.php` que use `prepared statements` para consultar empresas com `LIKE`.
-    *   **Status:** [Pendente]
+    *   **Status:** [Concluído]
 
 *   **Etapa 1.2: Inserir o Formulário de Busca no Header**
     *   **Ação:** Adicionar um formulário de busca com método `GET` em `templates/header.php`.
-    *   **Status:** [Pendente]
+    *   **Status:** [Concluído]
 
 *   **Etapa 1.3: Integrar a Busca na Página Inicial**
     *   **Ação:** Em `public/index.php`, verificar a existência de `$_GET['search']` e chamar o método de busca apropriado (`searchByName` ou `findAll`).
-    *   **Status:** [Pendente]
+    *   **Status:** [Concluído]

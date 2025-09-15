@@ -11,7 +11,17 @@ $bannerModel = new Banner($db);
 $companyModel = new Company($db);
 
 $banners = $bannerModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
-$companies = $companyModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
+
+// Verifica se há um termo de busca para as empresas
+$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+if (!empty($searchTerm)) {
+    // Se houver busca, filtra as empresas
+    $companies = $companyModel->searchByName($searchTerm)->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    // Caso contrário, busca todas as empresas
+    $companies = $companyModel->findAll()->fetchAll(PDO::FETCH_ASSOC);
+}
 
 ?>
 
