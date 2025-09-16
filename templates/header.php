@@ -7,12 +7,17 @@ if (session_status() == PHP_SESSION_NONE) {
 // Inclui o arquivo de configuração base
 require_once __DIR__ . '/../config/config.php';
 
+require_once __DIR__ . '/../lib/helpers.php';
+
 // Carrega as configurações do tema do banco de dados
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../src/models/Setting.php';
 $db = Database::getInstance();
 $settingModel = new Setting($db);
 $themeSettings = $settingModel->getAllSettings();
+
+// Define a classe da navbar com base na cor de fundo
+$navbar_class = is_color_light($themeSettings['header_cor_fundo'] ?? '#FFFFFF') ? 'navbar-light' : 'navbar-dark';
 
 // Prepara variáveis para OpenGraph com fallback
 $ogTitle = $themeSettings['og_title'] ?? 'Painel Shopping'; // Fallback para o nome do site
@@ -65,7 +70,7 @@ $ogUrl = rtrim(BASE_URL, '/') . $_SERVER['REQUEST_URI'];
 <body>
 
 <header style="background-color: <?= htmlspecialchars($themeSettings['header_cor_fundo']); ?>; color: <?= htmlspecialchars($themeSettings['header_cor_letra']); ?>;">
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: inherit;">
+    <nav class="navbar navbar-expand-lg <?= $navbar_class ?>" style="background-color: inherit;">
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand" href="<?= BASE_URL ?>" id="home-logo-link" style="color: inherit;">

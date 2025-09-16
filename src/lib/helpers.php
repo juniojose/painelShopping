@@ -80,3 +80,32 @@ function redirect($url) {
     header('Location: ' . $url);
     exit;
 }
+
+/**
+ * Verifica se uma cor hexadecimal é considerada "clara".
+ * Usado para determinar se o texto sobre a cor deve ser escuro ou claro.
+ *
+ * @param string $hex_color A cor no formato hexadecimal (ex: #RRGGBB ou #RGB).
+ * @return bool Retorna true se a cor for clara, false se for escura.
+ */
+function is_color_light($hex_color) {
+    $hex_color = ltrim($hex_color, '#');
+
+    if (strlen($hex_color) == 3) {
+        $r = hexdec(substr($hex_color, 0, 1) . substr($hex_color, 0, 1));
+        $g = hexdec(substr($hex_color, 1, 1) . substr($hex_color, 1, 1));
+        $b = hexdec(substr($hex_color, 2, 1) . substr($hex_color, 2, 1));
+    } else if (strlen($hex_color) == 6) {
+        $r = hexdec(substr($hex_color, 0, 2));
+        $g = hexdec(substr($hex_color, 2, 2));
+        $b = hexdec(substr($hex_color, 4, 2));
+    } else {
+        // Retorna um padrão (escuro) se o formato for inválido
+        return false;
+    }
+
+    // Fórmula para calcular o brilho percebido
+    $brightness = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+
+    return $brightness > 155; // Limiar comum para brilho
+}
