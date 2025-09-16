@@ -46,33 +46,45 @@ if ($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $settingModel->updateSetting('og_image', $new_og_image_path);
     }
 
-    // 3. Handle other text and color settings
-    $allowed_keys = [
-        'header_cor_fundo', 
-        'header_cor_letra', 
-        'footer_cor_fundo', 
-        'footer_cor_letra',
-        'companies_per_page',
-        'companies_columns',
-        'og_title', // Added
-        'og_description' // Added
+    // 3. Handle other text, color, and numeric settings
+    $settings_to_process = [
+        'header_cor_fundo' => 'color',
+        'header_cor_letra' => 'color',
+        'footer_cor_fundo' => 'color',
+        'footer_cor_letra' => 'color',
+        'companies_per_page' => 'numeric',
+        'companies_columns' => 'numeric',
+        'og_title' => 'text',
+        'og_description' => 'text'
     ];
 
-    foreach ($allowed_keys as $key) {
+    foreach ($settings_to_process as $key => $type) {
         if (isset($_POST[$key])) {
             $value = $_POST[$key];
-            
-            // Add specific validation
-            if ($key === 'companies_per_page' || $key === 'companies_columns') {
-                if (!is_numeric($value) || $value < 1) {
-                    continue; // Skip invalid number
-                }
-            } else { // It's a color
-                if (!preg_match('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/', $value)) {
-                    continue; // Skip invalid color
-                }
+            $is_valid = false;
+
+            switch ($type) {
+                case 'color':
+                    if (preg_match('/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/', $value)) {
+                        $is_valid = true;
+                    }
+                    break;
+                case 'numeric':
+                    if (is_numeric($value) && $value >= 1) {
+                        $is_valid = true;
+                    }
+                    break;
+                case 'text':
+                    // For text, we just ensure it's a string and trim it.
+                    // No special validation needed here, as it will be escaped on output.
+                    $value = trim($value);
+                    $is_valid = true;
+                    break;
             }
-            $settingModel->updateSetting($key, $value);
+
+            if ($is_valid) {
+                $settingModel->updateSetting($key, $value);
+            }
         }
     }
 
