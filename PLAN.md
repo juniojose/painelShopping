@@ -104,7 +104,23 @@ Esta fase adiciona um campo de busca na página inicial para filtrar empresas di
     *   **Ação:** Em `public/index.php`, verificar a existência de `$_GET['search']` e chamar o método de busca apropriado (`searchByName` ou `findAll`).
     *   **Status:** [Concluído]
 
-## Fase 9: Portal do Lojista [A Fazer]
+## Fase 9: Melhorias de Interface e SEO [A Fazer]
+
+Esta fase foca em melhorar a experiência do usuário em dispositivos móveis e otimizar a forma como a aplicação é apresentada em redes sociais.
+
+### 1. Refatoração do Header para Responsividade
+
+*   **Ação:** Reestruturar o `header.php` para usar o componente de `navbar` colapsável do Bootstrap 5. Em dispositivos móveis, o header exibirá apenas a logo e um ícone de menu "sanduíche". O formulário de busca e o botão de contato serão movidos para dentro deste menu.
+*   **Status:** [A Fazer]
+
+### 2. Implementação de Meta Tags OpenGraph
+
+*   **Ação:** Adicionar campos no painel de "Configurações" para que o administrador possa definir os valores para as tags `og:title`, `og:description` e `og:image`.
+*   **Status:** [A Fazer]
+*   **Ação:** Integrar a leitura e exibição dessas tags no `<head>` da aplicação, com o devido tratamento de segurança (`htmlspecialchars`).
+*   **Status:** [A Fazer]
+
+## Fase 10: Portal do Lojista [A Fazer]
 
 Esta fase introduz um sistema de autoatendimento para que usuários (lojistas) possam se registrar e gerenciar suas próprias empresas, que passarão por um fluxo de aprovação de um administrador.
 
