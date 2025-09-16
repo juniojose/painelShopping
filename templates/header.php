@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 // Inclui o arquivo de configuração base
 require_once __DIR__ . '/../config/config.php';
 
-require_once __DIR__ . '/../lib/helpers.php';
+require_once __DIR__ . '/../src/lib/helpers.php';
 
 // Carrega as configurações do tema do banco de dados
 require_once __DIR__ . '/../config/database.php';
