@@ -32,14 +32,30 @@ if ($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
          $settingModel->updateSetting('header_logo_url', $new_logo_path);
     }
 
-    // 2. Handle other settings
+    // 2. Handle OpenGraph Image Upload
+    $current_og_image_path = $_POST['current_og_image'] ?? null;
+    $new_og_image_path = handle_file_upload($_FILES['og_image'] ?? null, 'theme', $current_og_image_path);
+
+    if ($new_og_image_path === null && (!isset($_FILES['og_image']) || $_FILES['og_image']['error'] !== UPLOAD_ERR_NO_FILE)) {
+        $_SESSION['message'] = 'Erro: O arquivo de imagem OpenGraph enviado não é válido ou falhou ao salvar.';
+        redirect($redirect_url);
+        exit;
+    }
+
+    if ($new_og_image_path !== $current_og_image_path) {
+        $settingModel->updateSetting('og_image', $new_og_image_path);
+    }
+
+    // 3. Handle other text and color settings
     $allowed_keys = [
         'header_cor_fundo', 
         'header_cor_letra', 
         'footer_cor_fundo', 
         'footer_cor_letra',
         'companies_per_page',
-        'companies_columns'
+        'companies_columns',
+        'og_title', // Added
+        'og_description' // Added
     ];
 
     foreach ($allowed_keys as $key) {

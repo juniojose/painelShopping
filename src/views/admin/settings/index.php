@@ -71,6 +71,39 @@ $pageTitle = 'Configurações do Tema';
                             </div>
                         </div>
 
+                        <h5 class="mt-4">SEO e Redes Sociais (OpenGraph)</h5>
+                        <hr>
+
+                        <div class="mb-3">
+                            <label for="og_title" class="form-label">Título para Redes Sociais</label>
+                            <input type="text" class="form-control" id="og_title" name="og_title" value="<?= htmlspecialchars($settings['og_title'] ?? '') ?>">
+                            <small class="form-text text-muted">O título que aparecerá quando o site for compartilhado.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="og_description" class="form-label">Descrição para Redes Sociais</label>
+                            <textarea class="form-control" id="og_description" name="og_description" rows="3"><?= htmlspecialchars($settings['og_description'] ?? '') ?></textarea>
+                            <small class="form-text text-muted">A descrição que aparecerá sob o título no compartilhamento.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="og_image" class="form-label">Imagem para Redes Sociais</label>
+                            <input type="file" class="form-control" id="og_image" name="og_image">
+                            <small class="form-text text-muted">Recomendado: 1200x630 pixels. Se nenhuma imagem for enviada, a logo do cabeçalho será usada como padrão.</small>
+                            <?php if (!empty($settings['og_image'])): ?>
+                                <div class="mt-2">
+                                    <small>Imagem Atual:</small><br>
+                                    <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($settings['og_image'], '/')) ?>" alt="OpenGraph Image" style="max-width: 200px; background-color: #f0f0f0; padding: 5px; border-radius: 5px;">
+                                    <input type="hidden" name="current_og_image" value="<?= htmlspecialchars($settings['og_image']) ?>">
+                                </div>
+                            <?php elseif (!empty($settings['header_logo_url'])): ?>
+                                <div class="mt-2">
+                                    <small>Imagem Padrão (Logo do Cabeçalho):</small><br>
+                                    <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($settings['header_logo_url'], '/')) ?>" alt="Logo" style="max-height: 60px; background-color: #f0f0f0; padding: 5px; border-radius: 5px;">
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
                         <h5 class="mt-4">Vitrine</h5>
                         <hr>
 
