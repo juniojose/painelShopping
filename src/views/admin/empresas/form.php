@@ -53,6 +53,11 @@ if (isset($_GET['id'])) {
                         </div>
 
                         <div class="mb-3">
+                            <label for="url_youtube" class="form-label">Link de Vídeo Youtube</label>
+                            <input type="url" class="form-control" id="url_youtube" name="url_youtube" value="<?= htmlspecialchars($company->url_youtube ?? '') ?>">
+                        </div>
+
+                        <div class="mb-3">
                             <label for="logo" class="form-label">Logo da Empresa</label>
                             <input type="file" class="form-control" id="logo" name="logo">
                             <?php if ($action === 'update' && !empty($company->url_logo)): ?>

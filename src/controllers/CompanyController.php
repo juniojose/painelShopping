@@ -30,9 +30,12 @@ switch ($action) {
             }
 
             $company->nome = $_POST['nome'];
-            $company->url_site = $_POST['url_site'];
-            $company->url_logo = $logo_path;
 
+            $company->url_site = $_POST['url_site'];
+
+            $company->url_youtube = $_POST['url_youtube'];
+
+            $company->url_logo = $logo_path;
             $_SESSION['message'] = $company->create()
                 ? 'Empresa criada com sucesso!'
                 : 'Erro ao criar a empresa.';
@@ -54,6 +57,7 @@ switch ($action) {
             $company->id = $_POST['id'];
             $company->nome = $_POST['nome'];
             $company->url_site = $_POST['url_site'];
+            $company->url_youtube = $_POST['url_youtube'];
             $company->url_logo = $logo_path;
 
             $_SESSION['message'] = $company->update()

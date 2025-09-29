@@ -1,5 +1,6 @@
 <?php 
 require_once __DIR__ . '/../templates/header.php'; 
+require_once __DIR__ . '/../src/lib/helpers.php';
 
 // --- LÓGICA DE PAGINAÇÃO E BUSCA DE DADOS ---
 
@@ -105,7 +106,14 @@ if (!empty($searchTerm)) {
                         <div class="card h-100">
                             <a href="<?= htmlspecialchars($company['url_site']) ?>" class="site-link text-decoration-none text-body d-block p-2">
                                 <div style="aspect-ratio: 1 / 1; width: 100%;">
-                                    <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($company['url_logo'], '/')) ?>" alt="<?= htmlspecialchars($company['nome']) ?>" style="width: 100%; height: 100%; object-fit: contain;">
+                                    <?php 
+                                    $video_id = get_youtube_video_id($company['url_youtube']);
+                                    if ($video_id): 
+                                    ?>
+                                        <?= get_youtube_embed_code($video_id) ?>
+                                    <?php else: ?>
+                                        <img src="<?= htmlspecialchars(rtrim(BASE_URL, '/') . '/' . ltrim($company['url_logo'], '/')) ?>" alt="<?= htmlspecialchars($company['nome']) ?>" style="width: 100%; height: 100%; object-fit: contain;">
+                                    <?php endif; ?>
                                 </div>
                                 <div class="card-body p-2">
                                     <h6 class="card-title text-center small mb-0"><?= htmlspecialchars($company['nome']) ?></h6>

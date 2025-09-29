@@ -13,6 +13,7 @@ CREATE TABLE `empresas` (
   `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `url_site` varchar(2048) COLLATE utf8_unicode_ci NOT NULL,
   `url_logo` varchar(2048) COLLATE utf8_unicode_ci NOT NULL,
+  `url_youtube` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

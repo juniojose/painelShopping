@@ -109,3 +109,26 @@ function is_color_light($hex_color) {
 
     return $brightness > 155; // Limiar comum para brilho
 }
+
+/**
+ * Extrai o ID de um vídeo do YouTube de uma URL.
+ *
+ * @param string $url A URL do vídeo do YouTube.
+ * @return string|null O ID do vídeo ou null se não for uma URL válida do YouTube.
+ */
+function get_youtube_video_id($url) {
+    if (preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $url, $matches)) {
+        return $matches[1];
+    }
+    return null;
+}
+
+/**
+ * Gera o código de incorporação para um vídeo do YouTube.
+ *
+ * @param string $video_id O ID do vídeo do YouTube.
+ * @return string O código HTML para incorporar o vídeo.
+ */
+function get_youtube_embed_code($video_id) {
+    return '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/' . htmlspecialchars($video_id) . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+}
